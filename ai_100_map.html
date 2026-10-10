@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI分野の重要人物100人 業界勢力図カオスマップ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #070a13;
+      --bg-panel: rgba(15, 23, 42, 0.7);
+      --bg-chip: rgba(30, 41, 59, 0.6);
+      --bg-chip-hover: rgba(56, 189, 248, 0.2);
+      --border-panel: rgba(255, 255, 255, 0.08);
+      --border-chip: rgba(255, 255, 255, 0.1);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --accent-cyan: #06b6d4;
+      --accent-blue: #3b82f6;
+      --accent-purple: #8b5cf6;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', 'Noto Sans JP', 'Inter', sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      min-height: 100vh;
+      line-height: 1.5;
+      background-image: 
+        radial-gradient(circle at 10% 10%, rgba(59, 130, 246, 0.07) 0%, transparent 40%),
+        radial-gradient(circle at 90% 90%, rgba(139, 92, 246, 0.07) 0%, transparent 40%);
+      background-attachment: fixed;
+      overflow-x: hidden;
+    }
+
+    /* Compact Top Bar */
+    .top-bar {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border-panel);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      background: rgba(7, 10, 19, 0.85);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand-area {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .brand-area h1 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffffff 40%, #38bdf8 80%, #a855f7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.01em;
+    }
+
+    .brand-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .top-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .view-tabs {
+      display: flex;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.25rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-panel);
+      gap: 0.2rem;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.35rem 0.8rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .tab-btn.active {
+      color: #fff;
+      background: rgba(56, 189, 248, 0.25);
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+    }
+
+    .search-input {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--border-panel);
+      border-radius: 8px;
+      padding: 0.4rem 0.85rem;
+      color: #fff;
+      font-size: 0.82rem;
+      outline: none;
+      width: 220px;
+      transition: all 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent-cyan);
+      width: 260px;
+    }
+
+    /* Audio Pill */
+    .audio-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      color: #34d399;
+      font-weight: 600;
+    }
+
+    .audio-pill audio {
+      height: 24px;
+      width: 140px;
+    }
+
+    /* Main Board Layout (Chaos Map) */
+    main {
+      padding: 1.25rem;
+      max-width: 1920px;
+      margin: 0 auto;
+    }
+
+    .chaos-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1rem;
+    }
+
+    /* Category Boxes */
+    .faction-box {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-panel);
+      border-radius: 12px;
+      padding: 1rem;
+      backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .faction-box:hover {
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+
+    /* Layout column spans for factions */
+    .col-3 { grid-column: span 3; }
+    .col-4 { grid-column: span 4; }
+    .col-6 { grid-column: span 6; }
+    .col-8 { grid-column: span 8; }
+    .col-12 { grid-column: span 12; }
+
+    .box-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .box-title-area {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .box-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .box-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .box-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-dim);
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+    }
+
+    /* Chips Container */
+    .chips-flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    /* Individual Person Chip */
+    .person-chip {
+      background: var(--bg-chip);
+      border: 1px solid var(--border-chip);
+      border-radius: 8px;
+      padding: 0.35rem 0.6rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      cursor: pointer;
+      transition: all 0.15s ease-out;
+      user-select: none;
+      position: relative;
+    }
+
+    .person-chip:hover {
+      background: var(--bg-chip-hover);
+      border-color: var(--accent-cyan);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(6, 182, 212, 0.25);
+      z-index: 5;
+    }
+
+    .chip-num {
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.15);
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
+    }
+
+    .chip-name {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #f1f5f9;
+      white-space: nowrap;
+    }
+
+    .chip-affil {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      max-width: 140px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Layer Stack View */
+    .layer-layout {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .layer-row {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-panel);
+      border-radius: 12px;
+      padding: 1rem;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .layer-meta h3 {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #38bdf8;
+      margin-bottom: 0.25rem;
+    }
+
+    .layer-meta p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Floating Tooltip Card (Hover Effect) */
+    #hoverCard {
+      position: fixed;
+      width: 360px;
+      background: #0f172a;
+      border: 1px solid rgba(56, 189, 248, 0.5);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(56, 189, 248, 0.2);
+      border-radius: 14px;
+      padding: 1.15rem;
+      z-index: 1000;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+      backdrop-filter: blur(12px);
+    }
+
+    #hoverCard.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hc-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.4rem;
+    }
+
+    .hc-num {
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.15);
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+    }
+
+    .hc-faction {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+    }
+
+    .hc-name {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .hc-en {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-bottom: 0.35rem;
+    }
+
+    .hc-affil {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      margin-bottom: 0.65rem;
+      line-height: 1.3;
+    }
+
+    .hc-section {
+      margin-top: 0.5rem;
+      padding-top: 0.45rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .hc-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-dim);
+      margin-bottom: 0.2rem;
+    }
+
+    .hc-text {
+      font-size: 0.8rem;
+      color: #cbd5e1;
+      line-height: 1.45;
+    }
+
+    .hc-hint {
+      margin-top: 0.65rem;
+      font-size: 0.7rem;
+      color: #34d399;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-weight: 600;
+    }
+
+    /* Fixed Detail Side Drawer (When Clicked) */
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 500;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+    }
+
+    .drawer-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .side-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 480px;
+      max-width: 90vw;
+      height: 100vh;
+      background: #0b1120;
+      border-left: 1px solid rgba(56, 189, 248, 0.3);
+      box-shadow: -10px 0 40px rgba(0, 0, 0, 0.8);
+      z-index: 600;
+      transform: translateX(100%);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      padding: 2rem 1.75rem;
+      overflow-y: auto;
+    }
+
+    .side-drawer.active {
+      transform: translateX(0);
+    }
+
+    .drawer-close {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      background: rgba(255, 255, 255, 0.08);
+      border: none;
+      color: var(--text-muted);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .drawer-close:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+
+    .drawer-voice-box {
+      margin: 1.25rem 0;
+      background: rgba(2, 6, 23, 0.8);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 10px;
+      padding: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .drawer-voice-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #34d399;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .drawer-audio {
+      width: 100%;
+      height: 32px;
+      outline: none;
+    }
+
+    /* Table View */
+    .table-view {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-panel);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+
+    th {
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text-dim);
+      font-weight: 700;
+      text-align: left;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border-panel);
+    }
+
+    td {
+      padding: 0.65rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: #cbd5e1;
+    }
+
+    tr:hover td {
+      background: rgba(56, 189, 248, 0.08);
+      cursor: pointer;
+    }
+
+    @media (max-width: 1200px) {
+      .col-3, .col-4 { grid-column: span 6; }
+      .col-8 { grid-column: span 12; }
+    }
+    @media (max-width: 768px) {
+      .col-3, .col-4, .col-6 { grid-column: span 12; }
+      .layer-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Sticky Navigation -->
+  <div class="top-bar">
+    <div class="brand-area">
+      <div>
+        <h1>AI重要人物100人 業界勢力図カオスマップ</h1>
+        <div class="brand-subtitle">マウスを乗せると解説ポップアップ / クリックで詳細固定＆音声再生</div>
+      </div>
+    </div>
+
+    <div class="top-controls">
+      <div class="view-tabs">
+        <button class="tab-btn active" onclick="switchView('chaos', this)">① 勢力図カオスマップ</button>
+        <button class="tab-btn" onclick="switchView('layer', this)">② サプライチェーン階層</button>
+        <button class="tab-btn" onclick="switchView('table', this)">③ 全100人テーブル</button>
+      </div>
+
+      <input type="text" class="search-input" id="searchBox" placeholder="名前・企業・キーワード検索..." oninput="handleSearch()">
+
+      <div class="audio-pill">
+        <span>ずんだもん全編通し (52分)</span>
+        <audio controls src="voice_output_zundamon/000_全編結合_AI分野の重要人物100人_ずんだもん.wav" preload="none"></audio>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <!-- View 1: Chaos Map (Overview Matrix) -->
+    <div id="view-chaos" class="chaos-grid"></div>
+
+    <!-- View 2: Layer Stack View -->
+    <div id="view-layer" class="layer-layout" style="display:none;"></div>
+
+    <!-- View 3: Compact Table View -->
+    <div id="view-table" class="table-view" style="display:none;">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:60px;">No.</th>
+            <th style="width:160px;">氏名</th>
+            <th style="width:180px;">肩書き・所属</th>
+            <th style="width:160px;">陣営</th>
+            <th style="width:150px;">レイヤー</th>
+            <th>代表的な成果・功績</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Floating Hover Card -->
+  <div id="hoverCard">
+    <div class="hc-top">
+      <span class="hc-num" id="hcNum">No.001</span>
+      <span class="hc-faction" id="hcFaction">陣営名</span>
+    </div>
+    <div class="hc-name" id="hcName">名前</div>
+    <div class="hc-en" id="hcEn">English Name</div>
+    <div class="hc-affil" id="hcAffil">所属・肩書き</div>
+
+    <div class="hc-section">
+      <div class="hc-label">代表的な成果・主要功績</div>
+      <div class="hc-text" id="hcAch">功績内容</div>
+    </div>
+
+    <div class="hc-section">
+      <div class="hc-label">直近の動向と影響力</div>
+      <div class="hc-text" id="hcRecent">動向内容</div>
+    </div>
+
+    <div class="hc-hint">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      クリックで詳細固定＆音声再生
+    </div>
+  </div>
+
+  <!-- Detail Drawer for Click -->
+  <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+  <div class="side-drawer" id="sideDrawer">
+    <button class="drawer-close" onclick="closeDrawer()">&times;</button>
+    <div style="margin-top:0.5rem;">
+      <span class="chip-num" id="drNum" style="font-size:0.75rem;">No.001</span>
+      <h2 id="drName" style="font-size:1.6rem; color:#fff; margin-top:0.3rem;">名前</h2>
+      <div id="drEn" style="font-size:0.85rem; color:var(--text-dim); margin-bottom:0.25rem;"></div>
+      <div id="drAffil" style="font-size:1rem; color:var(--accent-cyan); font-weight:700;">所属</div>
+      <div id="drBadges" style="margin-top:0.6rem; display:flex; gap:0.4rem; flex-wrap:wrap;"></div>
+    </div>
+
+    <div class="drawer-voice-box">
+      <div class="drawer-voice-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+        <span>ずんだもんの解説ボイス（単体）</span>
+      </div>
+      <audio id="drAudio" class="drawer-audio" controls></audio>
+    </div>
+
+    <div style="margin-top:1rem; display:flex; flex-direction:column; gap:1.25rem;">
+      <div>
+        <h4 style="font-size:0.75rem; color:var(--text-dim); text-transform:uppercase; margin-bottom:0.3rem;">経歴・プロフィール</h4>
+        <p id="drProfile" style="font-size:0.88rem; color:#cbd5e1; line-height:1.6;"></p>
+      </div>
+
+      <div>
+        <h4 style="font-size:0.75rem; color:var(--text-dim); text-transform:uppercase; margin-bottom:0.3rem;">代表的な成果・功績</h4>
+        <p id="drAch" style="font-size:0.88rem; color:#cbd5e1; line-height:1.6;"></p>
+      </div>
+
+      <div>
+        <h4 style="font-size:0.75rem; color:var(--text-dim); text-transform:uppercase; margin-bottom:0.3rem;">直近の動向と影響力</h4>
+        <p id="drRecent" style="font-size:0.88rem; color:#cbd5e1; line-height:1.6;"></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const persons = [{"id": 1, "name": "サム・アルトマン", "en_name": "Sam Altman", "category_id": 1, "category_name": "大手テック企業・AI開発企業のトップ", "affiliation": "OpenAI CEO", "profile": "名門アクセラレーター「Y Combinator」の代表を務めた後、2015年に非営利組織としてOpenAIを共同設立。2019年に営利部門を設立しCEOに就任。", "achievement": "ChatGPTおよびGPT-4の大規模展開を主導し、生成AIブームを世界的社会現象に押し上げた。AI技術の商業化と巨額の資金調達を成功させ、業界のデファクトスタンダードを築く。", "recent": "2023年末の電撃解任劇から劇的に復帰後、巨額のAIチップ製造ネットワーク構想やo1などの推論モデルの発表、非営利から営利企業への構造転換を強力に推進中。", "faction": "MS × OpenAI 帝国", "faction_id": "ms_openai", "faction_color": "#0284c7", "layer": "L3 フロンティア基盤モデル開発", "layer_id": "l3", "wav_file": "001_サム_アルトマン.wav"}, {"id": 2, "name": "ジェンスン・フアン", "en_name": "Jensen Huang / 黄仁勲", "category_id": 1, "category_name": "大手テック企業・AI開発企業のトップ", "affiliation": "NVIDIA 創業者兼CEO", "profile": "1993年にNVIDIAを共同創業。PCゲーム用GPUメーカーから、並列計算プラットフォーム「CUDA」の開発を通じてAIコンピューティング基盤企業へと変革させた。", "achievement": "ディープラーニングの爆発的普及を支えたGPUおよび専用アクセラレータ（H100/B200等）を独占的に供給し、NVIDIAを時価総額世界トップクラスの巨大企業に押し上げた。", "recent": "次世代アーキテクチャ「Blackwell」の量産とデータセンター向けフルスタック基盤（ネットワーク、ソフトウェア含む）の提供を加速させ、産業用AI・フィジカルAIの旗振り役を務める。", "faction": "半導体・ハードウェア絶対君主", "faction_id": "hardware", "faction_color": "#8b5cf6", "layer": "L3 フロンティア基盤モデル開発", "layer_id": "l3", "wav_file": "002_ジェンスン_フアン.wav"}, {"id": 3, "name": "デミス・ハサビス", "en_name": "Demis Hassabis", "category_id": 1, "category_name": "大手テック企業・AI開発企業のトップ", "affiliation": "Google DeepMind CEO / 共同創業者", "profile": "チェスの天才少年、ゲーム開発者、神経科学者としての顔を持つ。2010年にDeepMindを共同創業し、2014年にGoogleに買収された。", "achievement": "「AlphaGo」で囲碁世界王者を撃破し深層強化学習の実力を証明。さらにタンパク質構造予測AI「AlphaFold」を開発し、2024年にノーベル化学賞を受賞。", "recent": "Google全体のAI研究統合組織（Google DeepMind）を率い、マルチモーダル基盤モデル「Gemini」シリーズの開発・刷新と科学的発見へのAI応用を主導。", "faction": "Google / DeepMind 直系", "faction_id": "google", "faction_color": "#ea4335", "layer": "L3 フロンティア基盤モデル開発", "layer_id": "l3", "wav_file": "003_デミス_ハサビス.wav"}, {"id": 4, "name": "ダリオ・アモデイ", "en_name": "Dario Amodei", "category_id": 1, "category_name": "大手テック企業・AI開発企業のトップ", "affiliation": "Anthropic 共同創業者兼CEO", "profile": "スタンフォード大・プリンストン大で物理学・生物物理学を修めた後、Baidu、Google Brainを経てOpenAIの研究担当バイスプレジデントを務めた。", "achievement": "スケーリング則の提唱に関わり、GPT-2/GPT-3の開発を主導。OpenAIの商用化姿勢に懸念を持ち、妹のダニエラらと「AIの安全性」を掲げてAnthropicを創業。", "recent": "高度なコーディング・推論能力を持つ「Claude 3.5 / 3.7 Sonnet」などをリリースし、Constitutional AI（憲法AI）に基づく安全性と最高峰の知能の両立でOpenAIの最強のライバルとして君臨。", "faction": "Anthropic 連合 (安全性・対抗馬)", "faction_id": "anthropic", "faction_color": "#d97706", "layer": "L3 フロンティア基盤モデル開発", "layer_id": "l3", "wav_file": "004_ダリオ_アモデイ.wav"}, {"id": 5, "name": "イーロン・マスク", "en_name": "Elon Musk", "category_id": 1, "category_name": "大手テック企業・AI開発企業のトップ", "affiliation": "xAI 創業者 / Tesla, SpaceX CEO", "profile": "2015年にOpenAIの初期出資者・共同創設者として名を連ねたが後に離脱。2023年に「宇宙の本質を理解する」ことを掲げxAIを電撃設立した。", "achievement": "テスラの自動運転（FSD）や人型ロボット「Optimus」の開発を主導するとともに、超短期間で世界最大規模のGPUクラスタ「Colossus」を構築した。", "recent": "xAIの対話型AI「Grok」をX（旧Twitter）へ統合。10万基規模のH100/H200データセンターを稼働させ、オープン性と反ポリティカル・コレクトネスを掲げて開発競争を激化させている。", "faction": "xAI / Tesla 独自経済圏", "faction_id": "xai", "faction_color": "#10b981", "layer": "L3 フロンティア基盤モデル開発", "layer_id": "l3", "wav_file": "005_イーロン_マスク.wav"}, {"id": 6, "name": "マーク・ザッカーバーグ", "en_name": "Mark Zuckerberg", "category_id": 1, "category_name": "大手テック企業・AI開発企業のトップ", "affiliation": "Meta 創業者兼CEO", "profile": "Facebook（現Meta）を創業。メタバース領域への巨額投資と並行し、オープンソースAIへのシフトを断行して業界のゲームチェンジャーとなった。", "achievement": "最先端オープンウェイトLLM「Llama」シリーズ（Llama 1, 2, 3）を無償公開し、クローズドモデル中心だったAIエコシステムに巨大なオープンソース対抗軸を確立。", "recent": "Llama 3/4シリーズの大規模学習に数万基のNVIDIA製GPUを投入し、スマートグラス（Ray-Ban Meta）とマルチモーダルAIの融合による日常AIデバイスの普及を急進。", "faction": "Meta × オープンソース AI 陣営", "faction_id": "meta_open", "faction_color": "#3b82f6", "layer": "L3 フロンティア基盤モデル開発", "layer_id": "l3", "wav_file": "006_マーク_ザッカーバーグ.wav"}, {"id": 7, "name": "スンダル・ピチャイ", "en_name": "Sundar Pichai", "category_id": 1, "category_name": "大手テック企業・AI開発企業のトップ", "affiliation": "Alphabet / Google CEO", "profile": "2004年にGoogle入社、ChromeやAndroidの成功を牽引。2015年にGoogle CEO、2019年に親会社AlphabetのCEOに就任。「AI First」企業への転換を宣言した。", "achievement": "検索、Workspace、Android、Cloudなど数十億人が利用する製品群へのAI統合を推進。Transformerを発明した研究陣を擁し、基盤技術の研究を継続的に支援。", "recent": "Google検索への「AI Overviews」導入やGeminiのエコシステム浸透を進め、独占禁止法訴訟などの逆風の中でテック巨人としてのAI優位性の維持に全力を注ぐ。", "faction": "Google / DeepMind 直系", "faction_id": "google", "faction_color": "#ea4335", "layer": "L3 フロンティア基盤モデル開発", "layer_id": "l3", "wav_file": "007_スンダル_ピチャイ.wav"}, {"id": 8, "name": "サティア・ナデラ", "en_name": "Satya Nadella", "category_id": 1, "category_name": "大手テック企業・AI開発企業のトップ", "affiliation": "Microsoft 会長兼CEO", "profile": "2014年のCEO就任以降、「Cloud First, Mobile First」を掲げてMicrosoftを大復活させた名経営者。", "achievement": "2019年からOpenAIにいち早く巨額出資を行い、独占的パートナーシップを締結。「Copilot」としてWindowsやOffice（Microsoft 365）にAIを全面統合した。", "recent": "OpenAI依存リスクを分散するためInflection AIのチーム買収やMistral AIとの提携を進め、自社主導の「Microsoft AI」部門を新設して主導権を確保。", "faction": "MS × OpenAI 帝国", "faction_id": "ms_openai", "faction_color": "#0284c7", "layer": "L3 フロンティア基盤モデル開発", "layer_id": "l3", "wav_file": "008_サティア_ナデラ.wav"}, {"id": 9, "name": "アンディ・ジャシー", "en_name": "Andy Jassy", "category_id": 1, "category_name": "大手テック企業・AI開発企業のトップ", "affiliation": "Amazon CEO", "profile": "クラウド市場を切り拓いたAWS（Amazon Web Services）の生みの親であり初代CEO。2021年にジェフ・ベゾスの後を継いでAmazon全体のCEOに就任。", "achievement": "クラウド基盤としてのAWSのAIスタック（自社製AIチップTrainium/Inferentia、基盤モデルプラットフォームAmazon Bedrock）を整備。", "recent": "Anthropicへ最大80億ドルの巨額投資を行い同社の主要クラウドパートナーとなる一方、自社LLM「Olympus」開発やAlexaのAI全面刷新を進める。", "faction": "クラウド・巨大インフラ基盤", "faction_id": "cloud_infra", "faction_color": "#06b6d4", "layer": "L3 フロンティア基盤モデル開発", "layer_id": "l3", "wav_file": "009_アンディ_ジャシー.wav"}, {"id": 10, "name": "ムスタファ・スレイマン", "en_name": "Mustafa Suleyman", "category_id": 1, "category_name": "大手テック企業・AI開発企業のトップ", "affiliation": "Microsoft AI CEO", "profile": "2010年にDeepMindを共同創業（応用・倫理面を担当）。その後対話特化型AIを開発するInflection AIを創業し、2024年春に中核メンバーと共にMicrosoftに電撃移籍した。", "achievement": "著書『The Coming Wave』でAIの急速な波とリスクをいち早く警告。人間味のあるパーソナルAI「Pi」を開発し、UI/UXの先駆者として評価された。", "recent": "Microsoftの消費者向けAI製品群（Copilot全体、Bing、Edgeなど）のトップとして、実用性と人間とのインタラクション向上を指揮。", "faction": "MS × OpenAI 帝国", "faction_id": "ms_openai", "faction_color": "#0284c7", "layer": "L3 フロンティア基盤モデル開発", "layer_id": "l3", "wav_file": "010_ムスタファ_スレイマン.wav"}, {"id": 11, "name": "ダニエラ・アモデイ", "en_name": "Daniela Amodei", "category_id": 1, "category_name": "大手テック企業・AI開発企業のトップ", "affiliation": "Anthropic 共同創業者兼プレジデント", "profile": "米国議会スタッフやStripeを経てOpenAIに参画し、安全性・人材育成・ピープル部門のバイスプレジデントを務めた後、兄のダリオ・アモデイらとAnthropicを創業。", "achievement": "優秀なAI研究者・安全専門家を惹きつける組織カルチャーを設計し、AmazonやGoogleからの数十億ドル規模の資金調達と事業スケールを牽引。", "recent": "Anthropicの組織運営・ガバナンスの要として、責任あるスケーリング方針（RSP: Responsible Scaling Policy）の策定や各国規制当局との対話を主導。", "faction": "Anthropic 連合 (安全性・対抗馬)", "faction_id": "anthropic", "faction_color": "#d97706", "layer": "L3 フロンティア基盤モデル開発", "layer_id": "l3", "wav_file": "011_ダニエラ_アモデイ.wav"}, {"id": 12, "name": "グレッグ・ブロックマン", "en_name": "Greg Brockman", "category_id": 1, "category_name": "大手テック企業・AI開発企業のトップ", "affiliation": "OpenAI 共同創業者兼社長", "profile": "MIT・ハーバード大出身。フィンテック大手Stripeの初代CTOとして急成長を支えた後、2015年にOpenAIの設立メンバー兼CTOとして参画。", "achievement": "OpenAIの比類なきエンジニアリング文化とシステム実装力を統括。GPT-4やChatGPTのデモ公開などで自らキーノートを務め、技術の伝道師として活躍。", "recent": "2023年のアルトマン解任時に辞任を表明して復帰を支えた最大の盟友。一時的な休職を経て復帰し、次世代フロンティアモデルの開発現場の指揮を執る。", "faction": "MS × OpenAI 帝国", "faction_id": "ms_openai", "faction_color": "#0284c7", "layer": "L3 フロンティア基盤モデル開発", "layer_id": "l3", "wav_file": "012_グレッグ_ブロックマン.wav"}, {"id": 13, "name": "アラビンド・スリニバス", "en_name": "Aravind Srinivas", "category_id": 1, "category_name": "大手テック企業・AI開発企業のトップ", "affiliation": "Perplexity AI 創業者兼CEO", "profile": "カリフォルニア大学バークレー校で博士号取得後、OpenAIやGoogle Brainで研究員として勤務。2022年にAI検索エンジンPerplexityを創業。", "achievement": "従来の「リンクを並べる検索」から「根拠付きで直接回答する対話型アンサーエンジン」へと検索体験をパラダイムシフトさせ、急成長を遂げた。", "recent": "出版社との収益分配モデルの構築や、金融・学術リサーチ向け機能の拡張を推進し、Google検索の牙城を脅かす最注目スタートアップとして台頭。", "faction": "急成長AIスタートアップ・特化エージェント", "faction_id": "startup", "faction_color": "#14b8a6", "layer": "L5 アプリケーション・自律エージェント", "layer_id": "l5", "wav_file": "013_アラビンド_スリニバス.wav"}, {"id": 14, "name": "リアン・ルボ", "en_name": "Liang Rubo / 梁汝波", "category_id": 1, "category_name": "大手テック企業・AI開発企業のトップ", "affiliation": "ByteDance CEO", "profile": "張一鳴（チャン・イーミン）とともにTikTokの親会社であるByteDanceを共同創業。2021年に張の後を継ぎCEOに就任。", "achievement": "ByteDanceの強力なレコメンデーションアルゴリズムを基礎に、自社LLM「Doubao（豆包）」を中国最大級のAIサービスへと成長させた。", "recent": "米国の半導体規制下でも自社AIインフラを最適化し、低価格API戦略で中国内外の開発者を囲い込みつつ、生成AI動画モデルなどの開発を急拡大。", "faction": "中国AI独自勢力 (高効率・独自モデル)", "faction_id": "china", "faction_color": "#e11d48", "layer": "L3 フロンティア基盤モデル開発", "layer_id": "l3", "wav_file": "014_リアン_ルボ.wav"}, {"id": 15, "name": "リヤン・ウェンフォン", "en_name": "Liang Wenfeng / 梁文鋒", "category_id": 1, "category_name": "大手テック企業・AI開発企業のトップ", "affiliation": "DeepSeek 創業者兼CEO", "profile": "中国のクオンツヘッジファンド「High-Flyer（幻方量化）」の創業者。自社の金融アルゴリズム用に蓄積した数千基のGPUインフラを背景に、2023年にAI研究所DeepSeekを設立。", "achievement": "「DeepSeek-V2」「DeepSeek-Coder」、そしてオープン推論モデル「DeepSeek-R1」などを開発。大手テックの数分の一の計算コストでGPT-4やo1に匹敵する性能をオープン公開し世界に衝撃を与えた。", "recent": "超高効率なMoE（Mixture of Experts）アーキテクチャと独自の強化学習手法により、オープンソースAI界におけるグローバルなトップランナーとして注目を集める。", "faction": "中国AI独自勢力 (高効率・独自モデル)", "faction_id": "china", "faction_color": "#e11d48", "layer": "L3 フロンティア基盤モデル開発", "layer_id": "l3", "wav_file": "015_リヤン_ウェンフォン.wav"}, {"id": 16, "name": "アレクサンドル・ウォン", "en_name": "Alexandr Wang", "category_id": 1, "category_name": "大手テック企業・AI開発企業のトップ", "affiliation": "Scale AI 創業者兼CEO / Meta AIアドバイザー", "profile": "MITを中退し、19歳で高品質な学習データアノテーションを提供するScale AIを創業。世界最年少のセルフメイド・ビリオネアとなった。", "achievement": "自動運転やLLMの学習に不可欠な高品質データ生成・ラベリング基盤を構築し、OpenAI、Meta、米軍（国防総省）などに不可欠なインフラとして提供。", "recent": "防衛・国家安全保障分野向けのAIプラットフォーム展開を強化し、政府関係のAI諮問機関や大手テックのアドバイザーとしてAI安全保障政策に深く関与。", "faction": "防衛・安全保障AI", "faction_id": "defense", "faction_color": "#475569", "layer": "L4 学習データ・評価・著作権認証", "layer_id": "l4", "wav_file": "016_アレクサンドル_ウォン.wav"}, {"id": 17, "name": "アーサー・メンシュ", "en_name": "Arthur Mensch", "category_id": 1, "category_name": "大手テック企業・AI開発企業のトップ", "affiliation": "Mistral AI 共同創業者兼CEO", "profile": "Google DeepMindでフロンティアモデル研究に従事した後、Meta AI出身の研究者らと2023年にフランス・パリでMistral AIを共同創業。", "achievement": "創業わずか数ヶ月で「Mistral 7B」「Mixtral 8x7B」といった高効率オープンモデルを発表し、欧州を代表するAIユニコーンへと急成長させた。", "recent": "商用フロンティアモデル「Mistral Large」やオープンモデル「Codestral」を展開し、米中主導のAI覇権に対する欧州の戦略的自立（テクノロジー主権）の象徴として存在感を放つ。", "faction": "欧州・ソブリンAI (独立路線)", "faction_id": "europe", "faction_color": "#f59e0b", "layer": "L3 フロンティア基盤モデル開発", "layer_id": "l3", "wav_file": "017_アーサー_メンシュ.wav"}, {"id": 18, "name": "クレマン・デラング", "en_name": "Clément Delangue", "category_id": 1, "category_name": "大手テック企業・AI開発企業のトップ", "affiliation": "Hugging Face 共同創業者兼CEO", "profile": "フランス出身。2016年に若者向けのチャットボットアプリとしてHugging Faceを共同創業したが、モデル共有プラットフォームへと方向転換。", "achievement": "世界中のオープンソースモデル、データセット、デモが集まる「AI版GitHub」としての不動のポジションを確立し、現代のオープンAI研究の基盤を提供。", "recent": "各国の研究機関やオープンソースコミュニティと連携したオープンサイエンスプロジェクト（BigScience、StarCoder等）を後押しし、オープンエコシステムの旗手として発言を続ける。", "faction": "Meta × オープンソース AI 陣営", "faction_id": "meta_open", "faction_color": "#3b82f6", "layer": "L3 フロンティア基盤モデル開発", "layer_id": "l3", "wav_file": "018_クレマン_デラング.wav"}, {"id": 19, "name": "ジェフリー・ヒントン", "en_name": "Geoffrey Hinton", "category_id": 2, "category_name": "AI研究のパイオニア・著名研究者", "affiliation": "トロント大学名誉教授、「AIのゴッドファーザー」", "profile": "認知心理学者・計算機科学者。長年冬の時代にあったニューラルネットワーク研究を粘り強く継続。Googleフェローを務めた後、2023年にAIの潜在的危険性を自由に発言するため辞任。", "achievement": "誤差逆伝播法（バックプロパゲーション）の普及、ボルツマンマシン、そして深層学習ブームの口火を切ったAlexNetの開発に寄与。2018年チューリング賞、2024年ノーベル物理学賞を受賞。", "recent": "AIが人類を超える知能を持ち制御不能になる「破滅的リスク（x-risk）」について国際会議やメディアで強く警告し、規制の必要性を訴え続けている。", "faction": "学術パイオニア・基盤研究", "faction_id": "pioneers", "faction_color": "#6366f1", "layer": "学術・基礎理論・パイオニア", "layer_id": "academic", "wav_file": "019_ジェフリー_ヒントン.wav"}, {"id": 20, "name": "ヨシュア・ベンジオ", "en_name": "Yoshua Bengio", "category_id": 2, "category_name": "AI研究のパイオニア・著名研究者", "affiliation": "モントリオール大学教授 / Mila（ケベックAI研究所）創設者、「AIのゴッドファーザー」", "profile": "フランス生まれ、カナダ育ち。モントリオールを世界のAI研究ハブへと押し上げた。2018年チューリング賞受賞。", "achievement": "ニューラル言語モデル、単語の分散表現（Word2Vecの前身）、リカレントニューラルネットワーク（RNN）やアテンション機構の基礎研究で自然言語処理の進化に決定的な貢献。", "recent": "近年はAIの安全性とガバナンスに情熱を注ぎ、国連や各国政府のアドバイザーとして活動。国際的な安全機関（AISI）設立を後押ししている。", "faction": "学術パイオニア・基盤研究", "faction_id": "pioneers", "faction_color": "#6366f1", "layer": "学術・基礎理論・パイオニア", "layer_id": "academic", "wav_file": "020_ヨシュア_ベンジオ.wav"}, {"id": 21, "name": "ヤン・ルカン", "en_name": "Yann LeCun", "category_id": 2, "category_name": "AI研究のパイオニア・著名研究者", "affiliation": "Meta チーフAIサイエンティスト / ニューヨーク大学教授、「AIのゴッドファーザー」", "profile": "フランス出身。ベル研究所等を経て2013年にFacebook（現Meta）のAI研究部門（FAIR）の初代ディレクターに就任。2018年チューリング賞受賞。", "achievement": "畳み込みニューラルネットワーク（CNN）「LeNet」を開発し、コンピュータビジョンと画像認識の礎を築いた。", "recent": "現在の自己回帰型LLMの知能限界を指摘し、人間のように物理世界を理解する「世界モデル（World Models / JEPAアーキテクチャ）」の研究に注力。オープンソースAIの強力な擁護者でもある。", "faction": "Meta × オープンソース AI 陣営", "faction_id": "meta_open", "faction_color": "#3b82f6", "layer": "L3 フロンティア基盤モデル開発", "layer_id": "l3", "wav_file": "021_ヤン_ルカン.wav"}, {"id": 22, "name": "イリヤ・サツケバー", "en_name": "Ilya Sutskever", "category_id": 2, "category_name": "AI研究のパイオニア・著名研究者", "affiliation": "Safe Superintelligence（SSI）共同創業者、元OpenAIチーフサイエンティスト", "profile": "ロシア生まれ、イスラエル・カナダ育ち。ヒントンの指導下でAlexNetを共同開発。Google Brainを経てOpenAIの共同創業者兼チーフサイエンティストを務めた。", "achievement": "Seq2Seq、スケーリング則、GPT-1〜4の理論的中核を担った現代AI界の最高峰の知性。超知能のアライメントを研究する「Superalignment」チームを率いた。", "recent": "2024年にOpenAIを退社後、「安全な超知能（SSI）の実現」だけを目的に掲げる新会社SSIを創業。製品化の圧力から距離を置き、純粋な知能の安全性とスケーリングを追求。", "faction": "学術パイオニア・基盤研究", "faction_id": "pioneers", "faction_color": "#6366f1", "layer": "L3 フロンティア基盤モデル開発", "layer_id": "l3", "wav_file": "022_イリヤ_サツケバー.wav"}, {"id": 23, "name": "リー・フェイフェイ", "en_name": "Fei-Fei Li / 李飛飛", "category_id": 2, "category_name": "AI研究のパイオニア・著名研究者", "affiliation": "World Labs 共同創業者 / スタンフォード大学教授（HAI共同所長）", "profile": "プリンストン大・Caltech出身。スタンフォードAI研究所長、Google Cloudチーフサイエンティストを歴任。「AIの母」と称される。", "achievement": "1400万枚以上の画像データベース「ImageNet」を構築し、ディープラーニング躍進の触媒となった。人間中心のAI（Human-Centered AI）を提唱。", "recent": "2024年に「空間知能（Spatial Intelligence）」を基盤とするスタートアップWorld Labsを創業。AIが3次元世界を理解・生成する次世代技術を開拓。", "faction": "学術パイオニア・基盤研究", "faction_id": "pioneers", "faction_color": "#6366f1", "layer": "学術・基礎理論・パイオニア", "layer_id": "academic", "wav_file": "023_リー_フェイフェイ.wav"}, {"id": 24, "name": "アンドリュー・ン", "en_name": "Andrew Ng / 呉恩達", "category_id": 2, "category_name": "AI研究のパイオニア・著名研究者", "affiliation": "DeepLearning.AI 創業者 / AI Fund マネージングゼネラルパートナー / Coursera 共同創業者", "profile": "スタンフォード大教授、Google Brain共同創設者、Baiduチーフサイエンティストを歴任。", "achievement": "YouTube動画から自律的に猫を認識する巨大ニューラルネット実験を主導。Courseraを通じて世界中の何百万人もの技術者に機械学習教育を提供。", "recent": "「データ中心のAI（Data-Centric AI）」や「エージェンティック・ワークフロー（Agentic Workflow）」の有効性を提唱し、教育・投資・オープンソースを通じて社会実装を後押し。", "faction": "学術パイオニア・基盤研究", "faction_id": "pioneers", "faction_color": "#6366f1", "layer": "学術・基礎理論・パイオニア", "layer_id": "academic", "wav_file": "024_アンドリュー_ン.wav"}, {"id": 25, "name": "ミラ・ムラティ", "en_name": "Mira Murati", "category_id": 2, "category_name": "AI研究のパイオニア・著名研究者", "affiliation": "Thinking Machines Lab CEO、元OpenAI CTO", "profile": "アルバニア出身、ダートマス大学で機械工学を専攻。ゴールドマン・サックス、テスラ（Model X開発）、Leap Motionを経て2018年にOpenAIへ参画。", "achievement": "OpenAIのCTOとして、ChatGPT、DALL-E、GPT-4、GPT-4oなどの技術開発から製品化、実世界展開へのエンジニアリングオペレーション全体を指揮。", "recent": "2024年秋にOpenAIを退社後、元同僚らと共に新たなAIベンチャー「Thinking Machines Lab」を立ち上げ、独自のフロンティアAIモデル研究を推進。", "faction": "学術パイオニア・基盤研究", "faction_id": "pioneers", "faction_color": "#6366f1", "layer": "L3 フロンティア基盤モデル開発", "layer_id": "l3", "wav_file": "025_ミラ_ムラティ.wav"}, {"id": 26, "name": "アンドレイ・カルパシー", "en_name": "Andrej Karpathy", "category_id": 2, "category_name": "AI研究のパイオニア・著名研究者", "affiliation": "Eureka Labs 創業者、元Tesla AIディレクター / 元OpenAI研究者", "profile": "スタンフォード大でリー・フェイフェイに師事し博士号取得。OpenAI創業メンバーを経てテスラでAutopilotおよび人型ロボットのAI責任者を務めた。", "achievement": "ニューラルネットワークが画像を言語で説明する基盤研究を切り拓き、テスラの完全自動運転（FSD）用ビジョンシステムの設計を統括。", "recent": "AIを活用した新時代の教育機関「Eureka Labs」を創業。YouTube等での深層学習の明快な解説動画でも世界的な影響力を持つ。", "faction": "学術パイオニア・基盤研究", "faction_id": "pioneers", "faction_color": "#6366f1", "layer": "学術・基礎理論・パイオニア", "layer_id": "academic", "wav_file": "026_アンドレイ_カルパシー.wav"}, {"id": 27, "name": "フランソワ・ショレ", "en_name": "François Chollet", "category_id": 2, "category_name": "AI研究のパイオニア・著名研究者", "affiliation": "AI研究者、Keras 開発者", "profile": "フランス出身。Googleで長年AI研究に従事し、世界で最も広く利用されるディープラーニングフレームワークの一つ「Keras」を開発。", "achievement": "Kerasのオープンソース公開により世界的な深層学習の実装障壁を劇的に低下させた。また、真の汎用人工知能（AGI）を測定するベンチマーク「ARC（Abstraction and Reasoning Corpus）」を設計。", "recent": "2024年末にGoogleを離れ新たなプロジェクトを開始。ARC-AGIチャレンジを通じて、単なる暗記・統計的パターン認識を超えたAIの適応的推論知能の追求を主導。", "faction": "学術パイオニア・基盤研究", "faction_id": "pioneers", "faction_color": "#6366f1", "layer": "学術・基礎理論・パイオニア", "layer_id": "academic", "wav_file": "027_フランソワ_ショレ.wav"}, {"id": 28, "name": "ジェフ・ディーン", "en_name": "Jeff Dean", "category_id": 2, "category_name": "AI研究のパイオニア・著名研究者", "affiliation": "Google チーフサイエンティスト", "profile": "1999年にGoogle入社。大規模分散コンピューティングの伝説的エンジニアであり、MapReduce、Bigtable、Spannerなどのインフラを構築。", "achievement": "Google Brainの共同創設者として深層学習の社内浸透を推進。TensorFlowの開発を統括し、AI専用プロセッサTPUの設計にも深く寄与。", "recent": "Google DeepMindとGoogle Researchの統合技術戦略を監督し、大規模マルチモーダルモデルGeminiのアーキテクチャ設計と計算スケーリングを主導。", "faction": "Google / DeepMind 直系", "faction_id": "google", "faction_color": "#ea4335", "layer": "学術・基礎理論・パイオニア", "layer_id": "academic", "wav_file": "028_ジェフ_ディーン.wav"}, {"id": 29, "name": "ジョエル・ピノー", "en_name": "Joelle Pineau", "category_id": 2, "category_name": "AI研究のパイオニア・著名研究者", "affiliation": "Cohere Chief AI Officer / マギル大学教授 / 元Meta VP of AI Research", "profile": "カナダ・マギル大学教授。MetaのAI研究部門（FAIR）の責任者として長年オープンサイエンス研究を率いた。", "achievement": "強化学習、ロボティクス、医療AIのパイオニア。AI研究における「再現性危機（Reproducibility Crisis）」に対処するための再現性チェックリストを導入し、業界全体の研究規範を確立。", "recent": "2024年にエンタープライズ特化型LLM開発企業CohereのチーフAIオフィサーに就任し、ビジネス実用に耐えうるセキュアで高信頼なLLM開発を牽引。", "faction": "学術パイオニア・基盤研究", "faction_id": "pioneers", "faction_color": "#6366f1", "layer": "学術・基礎理論・パイオニア", "layer_id": "academic", "wav_file": "029_ジョエル_ピノー.wav"}, {"id": 30, "name": "クリス・オラー", "en_name": "Chris Olah", "category_id": 2, "category_name": "AI研究のパイオニア・著名研究者", "affiliation": "Anthropic 共同創業者兼研究者", "profile": "大学を中退後、独自の研究で頭角を現しGoogle Brain、OpenAIを経てAnthropicの設立に参画した天才的研究者。", "achievement": "ニューラルネットワークの内部動作を可視化・解明する「機械論的解釈可能性（Mechanistic Interpretability）」の先駆者。トランスフォーマーの回路構造の解析手法を確立。", "recent": "Claudeの内部表現（「金門橋」の概念など）を特定・操作する「Monosemanticity（単一意味性）」の研究成果を発表し、AIのブラックボックス解消に最も近い研究者として注目される。", "faction": "Anthropic 連合 (安全性・対抗馬)", "faction_id": "anthropic", "faction_color": "#d97706", "layer": "L3 フロンティア基盤モデル開発", "layer_id": "l3", "wav_file": "030_クリス_オラー.wav"}, {"id": 31, "name": "パーシー・リアン", "en_name": "Percy Liang", "category_id": 2, "category_name": "AI研究のパイオニア・著名研究者", "affiliation": "スタンフォード大学准教授 / CRFM（基礎モデル研究センター）ディレクター", "profile": "UCバークレーで博士号取得後、スタンフォード大で自然言語処理と機械学習の研究室を主宰。", "achievement": "「基盤モデル（Foundation Models）」という用語・概念を提唱し、その社会的・技術的影響を包括的に評価する枠組み「HELM（Holistic Evaluation of Language Models）」を開発。", "recent": "オープンで透明なAIモデルの評価とベンチマークの策定をリードし、AIの透明性指数（Transparency Index）などを通じて大手テックのガバナンス向上を促す。", "faction": "学術パイオニア・基盤研究", "faction_id": "pioneers", "faction_color": "#6366f1", "layer": "学術・基礎理論・パイオニア", "layer_id": "academic", "wav_file": "031_パーシー_リアン.wav"}, {"id": 32, "name": "イェジン・チョイ", "en_name": "Yejin Choi / 崔叡珍", "category_id": 2, "category_name": "AI研究のパイオニア・著名研究者", "affiliation": "スタンフォード大学 HAI フェロー / ワシントン大学教授", "profile": "韓国出身。ワシントン大学教授およびアレン人工知能研究所（AI2）シニアリサーチマネージャーを務め、マッカーサー・フェロー（天才賞）を受賞。", "achievement": "自然言語理解における「常識推論（Commonsense Reasoning）」、倫理的判断、比喩の理解など、LLMが直面する高難度な認知課題の解明に貢献。", "recent": "巨大モデルの力任せなスケーリングに対する批判的考察と、小型モデルによる効率的な推論、人間的価値観に即したAIの道徳規範のモデル化を推進。", "faction": "学術パイオニア・基盤研究", "faction_id": "pioneers", "faction_color": "#6366f1", "layer": "学術・基礎理論・パイオニア", "layer_id": "academic", "wav_file": "032_イェジン_チョイ.wav"}, {"id": 33, "name": "ジャレッド・カプラン", "en_name": "Jared Kaplan", "category_id": 2, "category_name": "AI研究のパイオニア・著名研究者", "affiliation": "Anthropic 共同創業者兼チーフサイエンスオフィサー", "profile": "ハーバード大・MITで理論物理学を専攻し、ジョンズ・ホプキンス大学物理学教授を務めた理論物理学者。OpenAIのコンサルタントを経てAnthropicを共同創業。", "achievement": "2020年に発表された「ニューラル言語モデルのスケーリング則（Scaling Laws）」の筆頭著者。計算量、モデル規模、データセットの拡大に伴う性能予測式を数理的に証明。", "recent": "Anthropicのモデルアーキテクチャと研究戦略の根幹を支え、モデルの推論能力向上と長文コンテキスト処理の極限を追求。", "faction": "Anthropic 連合 (安全性・対抗馬)", "faction_id": "anthropic", "faction_color": "#d97706", "layer": "L3 フロンティア基盤モデル開発", "layer_id": "l3", "wav_file": "033_ジャレッド_カプラン.wav"}, {"id": 34, "name": "ヤクブ・パチョツキ", "en_name": "Jakub Pachocki", "category_id": 2, "category_name": "AI研究のパイオニア・著名研究者", "affiliation": "OpenAI チーフサイエンティスト", "profile": "ポーランド出身、カーネギーメロン大学で博士号取得。国際情報オリンピック等の金メダリスト。2017年にOpenAIに参画。", "achievement": "OpenAI Dota 2チームを率いてプロゲーマー撃破を達成後、GPT-4のプリトレーニング責任者としてアーキテクチャと分散学習の最適化を主導。", "recent": "イリヤ・サツケバーの退職に伴い2024年にOpenAIのチーフサイエンティストに就任。次世代推論モデル（o1等）の基盤研究を統括。", "faction": "MS × OpenAI 帝国", "faction_id": "ms_openai", "faction_color": "#0284c7", "layer": "L3 フロンティア基盤モデル開発", "layer_id": "l3", "wav_file": "034_ヤクブ_パチョツキ.wav"}, {"id": 35, "name": "マーク・チェン", "en_name": "Mark Chen", "category_id": 2, "category_name": "AI研究のパイオニア・著名研究者", "affiliation": "OpenAI チーフリサーチオフィサー", "profile": "MIT出身。クオンツトレーダーを経て2018年にOpenAIに参画。", "achievement": "画像生成モデル「DALL-E」およびコード生成AIの祖となった「Codex（GitHub Copilotの基礎）」の開発を主導。マルチモーダルAIとプログラミング自動化の道を開いた。", "recent": "ミラ・ムラティらの退社に伴い、OpenAIのリサーチ部門トップに就任。最先端の推論モデルや次世代フロンティアモデルの開発を指揮。", "faction": "MS × OpenAI 帝国", "faction_id": "ms_openai", "faction_color": "#0284c7", "layer": "L3 フロンティア基盤モデル開発", "layer_id": "l3", "wav_file": "035_マーク_チェン.wav"}, {"id": 36, "name": "テレンス・タオ", "en_name": "Terence Tao / 陶哲軒", "category_id": 2, "category_name": "AI研究のパイオニア・著名研究者", "affiliation": "UCLA 教授、数学者（フィールズ賞受賞者）", "profile": "オーストラリア出身の天才数学者。24歳でUCLAの正教授となり、2006年に数学界のノーベル賞であるフィールズ賞を受賞。", "achievement": "調和解析、数論、偏微分方程式など多岐にわたる分野で傑出した業績を残す。AIツール（Lean等の証明支援系やLLM）を自らの数学研究に最も早く実践的に取り入れた。", "recent": "AIを活用した数学的定理の自動証明・検証プロジェクトを積極的に主導し、「数学者のワークフローをAIがどのように変革するか」を世界に示している。", "faction": "学術パイオニア・基盤研究", "faction_id": "pioneers", "faction_color": "#6366f1", "layer": "学術・基礎理論・パイオニア", "layer_id": "academic", "wav_file": "036_テレンス_タオ.wav"}, {"id": 37, "name": "リチャード・ソーチャー", "en_name": "Richard Socher", "category_id": 2, "category_name": "AI研究のパイオニア・著名研究者", "affiliation": "You.com 創業者兼CEO", "profile": "ドイツ出身、スタンフォード大でクリストファー・マニングに師事。自然言語処理向けディープラーニングスタートアップMetaMindを創業しSalesforceへ売却、同社チーフサイエンティストを務めた。", "achievement": "言語処理における再帰的ニューラルネットワーク（Recursive NN）の研究で知られ、初期のディープラーニングNLPを牽引。", "recent": "AI検索エンジン「You.com」を立ち上げ、複雑な問題解決やリサーチに特化したAIエージェントプラットフォームへと発展させている。", "faction": "学術パイオニア・基盤研究", "faction_id": "pioneers", "faction_color": "#6366f1", "layer": "学術・基礎理論・パイオニア", "layer_id": "academic", "wav_file": "037_リチャード_ソーチャー.wav"}, {"id": 38, "name": "シンシア・ブリジール", "en_name": "Cynthia Breazeal", "category_id": 2, "category_name": "AI研究のパイオニア・著名研究者", "affiliation": "MIT デジタルラーニング学部長 / パーソナルロボットグループディレクター", "profile": "MITメディアラボ出身。「ソーシャルロボティクス」分野のパイオニア。家庭用コンパニオンロボット「Jibo」を開発したことでも知られる。", "achievement": "表情や身振りで感情を表現する世界初の社会的ロボット「Kismet」を開発。人間とロボットの情動的インタラクションの基礎理論を構築。", "recent": "子供向けのAIリテラシー教育（MIT RAISEイニシアチブ）を主導し、生成AI時代における倫理的かつ包摂的な人間とAIの協調デザインを提唱。", "faction": "学術パイオニア・基盤研究", "faction_id": "pioneers", "faction_color": "#6366f1", "layer": "学術・基礎理論・パイオニア", "layer_id": "academic", "wav_file": "038_シンシア_ブリジール.wav"}, {"id": 39, "name": "ダフネ・コラー", "en_name": "Daphne Koller", "category_id": 2, "category_name": "AI研究のパイオニア・著名研究者", "affiliation": "insitro 創業者兼CEO / スタンフォード大学客員教授", "profile": "イスラエル出身、スタンフォード大教授。確率的グラフィカルモデルの世界的権威。アンドリュー・ンと共にCourseraを共同創業し初代CEOを務めた。", "achievement": "マッカーサー・フェロー受賞。機械学習と生命科学の融合を早期から推進し、AI創薬スタートアップinsitroを設立。", "recent": "大規模な生体データ生成自動化とディープラーニングを組み合わせ、難治性疾患の標的同定と創薬プロセスを抜本的に短縮する研究をリード。", "faction": "学術パイオニア・基盤研究", "faction_id": "pioneers", "faction_color": "#6366f1", "layer": "学術・基礎理論・パイオニア", "layer_id": "academic", "wav_file": "039_ダフネ_コラー.wav"}, {"id": 40, "name": "チェルシー・フィン", "en_name": "Chelsea Finn", "category_id": 2, "category_name": "AI研究のパイオニア・著名研究者", "affiliation": "Physical Intelligence 共同創業者 / スタンフォード大学助教", "profile": "UCバークレーでセルゲイ・レヴィンに師事。メタ学習とロボット学習のトップランナー。", "achievement": "未知のタスクに少数のデータで瞬時に適応するメタ学習アルゴリズム「MAML（Model-Agnostic Meta-Learning）」を考案。", "recent": "物理世界で動作する汎用ロボットAI基盤モデルを開発する「Physical Intelligence（Pi）」を共同創業し、ジェフ・ベゾスやOpenAI等から巨額資金を調達してフィジカルAIの最前線を走る。", "faction": "学術パイオニア・基盤研究", "faction_id": "pioneers", "faction_color": "#6366f1", "layer": "学術・基礎理論・パイオニア", "layer_id": "academic", "wav_file": "040_チェルシー_フィン.wav"}, {"id": 41, "name": "デイビッド・ハ", "en_name": "David Ha", "category_id": 2, "category_name": "AI研究のパイオニア・著名研究者", "affiliation": "Sakana AI 共同創業者兼CEO", "profile": "元ゴールドマン・サックスの金利デリバティブトレーダーという異色の経歴を持つ。Google Brain東京オフィス代表、Stability AI研究責任者を経てSakana AIを創業。", "achievement": "神経進化（Neuroevolution）、World Models（世界モデル）の共著者として知られ、進化論的アルゴリズムと深層学習の融合で独自の研究を展開。", "recent": "日本・東京を拠点に、複数の小型モデルを進化論的に融合する手法や「AIサイエンティスト（自動研究AI）」を開発。創業1年足らずで日本のAIユニコーンとして急成長。", "faction": "学術パイオニア・基盤研究", "faction_id": "pioneers", "faction_color": "#6366f1", "layer": "L3 フロンティア基盤モデル開発", "layer_id": "l3", "wav_file": "041_デイビッド_ハ.wav"}, {"id": 42, "name": "リサ・スー", "en_name": "Lisa Su / 蘇姿丰", "category_id": 3, "category_name": "インフラ・ハードウェア・クラウドの重鎮", "affiliation": "AMD（Advanced Micro Devices）会長兼CEO", "profile": "MITで電気工学の博士号を取得。IBM、Freescaleを経て2014年にAMDのCEOに就任し、経営危機にあった同社を劇的なV字回復に導いた。", "achievement": "Zenマイクロアーキテクチャの成功を主導。AIアクセラレータ「Instinct MI300」シリーズを投入し、NVIDIA一強のAI半導体市場において最大のオルタナティブ（対抗馬）を築く。", "recent": "オープンソフトウェアスタック「ROCm」の機能強化とAIスタートアップ（Silo AI等）の積極買収を進め、次世代AIデータセンター市場でNVIDIAの牙城に迫る。", "faction": "半導体・ハードウェア絶対君主", "faction_id": "hardware", "faction_color": "#8b5cf6", "layer": "L1 半導体・ハードウェア・メモリ", "layer_id": "l1", "wav_file": "042_リサ_スー.wav"}, {"id": 43, "name": "ラリー・エリソン", "en_name": "Larry Ellison", "category_id": 3, "category_name": "インフラ・ハードウェア・クラウドの重鎮", "affiliation": "Oracle 共同創業者・取締役会長兼CTO", "profile": "1977年にOracleを共同創業。リレーショナルデータベース市場を掌握し、シリコンバレー屈指の伝説的経営者・資産家として君臨。", "achievement": "Oracle Cloud Infrastructure（OCI）をAIトレーニング・推論に最適化された高性能・低コストなベアメタルクラウドとして再構築。", "recent": "xAIやMicrosoft、OpenAIとの大規模なコンピュート提携を締結。ギガワット級の巨大データセンター構想や小型原子炉電源の導入を提唱し、AI電力問題の最前線に立つ。", "faction": "xAI / Tesla 独自経済圏", "faction_id": "xai", "faction_color": "#10b981", "layer": "L2 クラウド・データセンター・分散基盤", "layer_id": "l2", "wav_file": "043_ラリー_エリソン.wav"}, {"id": 44, "name": "ホック・タン", "en_name": "Hock Tan / 陳福陽", "category_id": 3, "category_name": "インフラ・ハードウェア・クラウドの重鎮", "affiliation": "Broadcom プレジデント兼CEO", "profile": "マレーシア出身、MITで機械工学を専攻、ハーバード・ビジネス・スクールでMBA取得。アグレッシブなM&A戦略でBroadcomを世界的半導体・インフラソフトウェア巨人に育成。", "achievement": "AIクラスターに不可欠な超高速イーサネットスイッチ（Tomahawk/Jericho）とカスタムAIアクセラレータ（ASIC）の設計基盤を提供。GoogleのTPU受託開発などを支える。", "recent": "VMware買収の統合を進めつつ、大手ハイパースケーラー（Meta、Google、ByteDance等）向けのカスタムAIチップ受注を急拡大させ、AIネットワーク市場を支配。", "faction": "半導体・ハードウェア絶対君主", "faction_id": "hardware", "faction_color": "#8b5cf6", "layer": "L1 半導体・ハードウェア・メモリ", "layer_id": "l1", "wav_file": "044_ホック_タン.wav"}, {"id": 45, "name": "C.C. ウェイ", "en_name": "C.C. Wei / 魏哲家", "category_id": 3, "category_name": "インフラ・ハードウェア・クラウドの重鎮", "affiliation": "TSMC（台湾積体電路製造）会長兼CEO", "profile": "イェール大学で電気工学博士号取得。長年TSMCの製造・事業運営を統括し、創業者モリス・チャンの後を継ぎ単独リーダーに就任。", "achievement": "3nm/2nmなどの先端微細化プロセス技術と先進パッケージング（CoWoS: Chip-on-Wafer-on-Substrate）を確立。NVIDIA、Apple、AMDなど世界のAI半導体のほぼ全量を製造。", "recent": "世界的なAI半導体の供給ボトルネックである先進パッケージング生産能力の倍増を推進し、日米欧へのグローバル工場展開を主導。", "faction": "半導体・ハードウェア絶対君主", "faction_id": "hardware", "faction_color": "#8b5cf6", "layer": "L1 半導体・ハードウェア・メモリ", "layer_id": "l1", "wav_file": "045_C.C._ウェイ.wav"}, {"id": 46, "name": "クリスティアーノ・アモン", "en_name": "Cristiano Amon", "category_id": 3, "category_name": "インフラ・ハードウェア・クラウドの重鎮", "affiliation": "Qualcomm プレジデント兼CEO", "profile": "ブラジル出身の電気技術者。1995年Qualcomm入社、QCT（半導体部門）を率いた後、2021年にCEOに就任。", "achievement": "モバイルプロセッサ「Snapdragon」に強力なNPU（ニューラル処理ユニット）を統合。PC向けチップ「Snapdragon X Elite」を市場投入し、オンデバイスAI市場を切り拓く。", "recent": "スマートフォン、Copilot+ PC、自動車（デジタルシャーシ）におけるローカルAI推論の普及をリードし、エッジAIの覇権を争う。", "faction": "半導体・ハードウェア絶対君主", "faction_id": "hardware", "faction_color": "#8b5cf6", "layer": "L1 半導体・ハードウェア・メモリ", "layer_id": "l1", "wav_file": "046_クリスティアーノ_アモン.wav"}, {"id": 47, "name": "サンジャイ・メロトラ", "en_name": "Sanjay Mehrotra", "category_id": 3, "category_name": "インフラ・ハードウェア・クラウドの重鎮", "affiliation": "Micron Technology プレジデント兼CEO", "profile": "サンディスク（SanDisk）の共同創業者兼元CEO。2017年より米メモリ半導体大手MicronのCEOに就任。", "achievement": "AIサーバーに不可欠な広帯域幅メモリ「HBM（High Bandwidth Memory）」の微細化・低消費電力化を加速（HBM3E）。", "recent": "NVIDIAのBlackwellシリーズ向けHBM3Eの主要サプライヤーとして認定を受け、AIデータセンターのボトルネックであるメモリ需要を支える設備投資を主導。", "faction": "半導体・ハードウェア絶対君主", "faction_id": "hardware", "faction_color": "#8b5cf6", "layer": "L1 半導体・ハードウェア・メモリ", "layer_id": "l1", "wav_file": "047_サンジャイ_メロトラ.wav"}, {"id": 48, "name": "アービンド・クリシュナ", "en_name": "Arvind Krishna", "category_id": 3, "category_name": "インフラ・ハードウェア・クラウドの重鎮", "affiliation": "IBM 会長兼CEO", "profile": "イリノイ大学アーバナ・シャンペーン校で博士号取得。IBMの研究部門責任者を経て、Red Hatの340億ドル買収を主導し2020年にCEOに就任。", "achievement": "レガシー事業からハイブリッドクラウドとエンタープライズAIへと同社を完全シフト。企業向けエンタープライズAIプラットフォーム「watsonx」を立ち上げた。", "recent": "オープンソース基盤モデル「Granite」をApache 2.0ライセンスで無償公開し、法的な知的財産補償を備えた実用的な企業導入を強力に後押し。", "faction": "クラウド・巨大インフラ基盤", "faction_id": "cloud_infra", "faction_color": "#06b6d4", "layer": "L2 クラウド・データセンター・分散基盤", "layer_id": "l2", "wav_file": "048_アービンド_クリシュナ.wav"}, {"id": 49, "name": "アリ・ゴドシ", "en_name": "Ali Ghodsi", "category_id": 3, "category_name": "インフラ・ハードウェア・クラウドの重鎮", "affiliation": "Databricks 共同創業者兼CEO", "profile": "スウェーデン王立工科大学で博士号取得。UCバークレーのAMPLabで分散処理フレームワーク「Apache Spark」を共同開発しDatabricksを創業。", "achievement": "データレイクとデータウェアハウスを融合した「レイクハウス（Lakehouse）」概念を確立。MosaicMLを13億ドルで買収し、自社データでのLLM開発基盤を統合。", "recent": "オープンLLM「DBRX」の発表やAIエージェント構築基盤の展開を推進し、企業の独自データ資産をAIへと変換する最重要データプラットフォームを指揮。", "faction": "クラウド・巨大インフラ基盤", "faction_id": "cloud_infra", "faction_color": "#06b6d4", "layer": "L2 クラウド・データセンター・分散基盤", "layer_id": "l2", "wav_file": "049_アリ_ゴドシ.wav"}, {"id": 50, "name": "マット・ガーマン", "en_name": "Matt Garman", "category_id": 3, "category_name": "インフラ・ハードウェア・クラウドの重鎮", "affiliation": "Amazon Web Services（AWS）CEO", "profile": "2006年に初期のプロダクトマネージャーとしてAWSに参画。EC2などの基幹インフラ事業を率い、セールス・マーケティング担当SVPを経て2024年にAWS CEOに就任。", "achievement": "世界最大のクラウドインフラとしてAWSをスケールさせ、生成AIスタック（インフラ層、基盤モデル層Bedrock、アプリケーション層Q）の全レイヤーの統括を指揮。", "recent": "自社製シリコン（Trainium2）の普及加速と、セキュリティ・プライバシーに厳しいエンタープライズ顧客の生成AIワークロード獲得に注力。", "faction": "クラウド・巨大インフラ基盤", "faction_id": "cloud_infra", "faction_color": "#06b6d4", "layer": "L2 クラウド・データセンター・分散基盤", "layer_id": "l2", "wav_file": "050_マット_ガーマン.wav"}, {"id": 51, "name": "チェイス・ロックミラー", "en_name": "Chase Lochmiller", "category_id": 3, "category_name": "インフラ・ハードウェア・クラウドの重鎮", "affiliation": "Crusoe 共同創業者兼CEO", "profile": "MIT・スタンフォード出身。大手クオンツ投資会社Jump Tradingの元パートナー。2018年にCrusoe Energy Systemsを共同創業。", "achievement": "石油採掘現場で燃やされていた余剰随伴ガス（フレアガス）やクリーンエネルギーを利用してGPUデータセンターを稼働させる「気候配慮型AIインフラ」を創出。", "recent": "再生可能エネルギーを主電源とする超大規模AI専用クラウド「Crusoe Cloud」を急拡大させ、数万基規模のGPUデータセンター建設でハイパースケーラーから巨額受注を獲得。", "faction": "クラウド・巨大インフラ基盤", "faction_id": "cloud_infra", "faction_color": "#06b6d4", "layer": "L2 クラウド・データセンター・分散基盤", "layer_id": "l2", "wav_file": "051_チェイス_ロックミラー.wav"}, {"id": 52, "name": "マシュー・プリンス", "en_name": "Matthew Prince", "category_id": 3, "category_name": "インフラ・ハードウェア・クラウドの重鎮", "affiliation": "Cloudflare 共同創業者兼CEO", "profile": "ハーバード・ビジネス・スクール出身。2009年にCloudflareを共同創業し、世界最高峰のエッジセキュリティ・CDNネットワークを構築。", "achievement": "グローバルに分散したエッジノード上でAI推論を実行するプラットフォーム「Workers AI」を展開。AI開発者がインフラ管理不要でモデルを即座に動かせる環境を提供。", "recent": "AIクローラーによる無断コンテンツスクレイピングをブロックするツールをウェブマスター向けに提供するなど、AIとウェブの共存ルール形成を先導。", "faction": "クラウド・巨大インフラ基盤", "faction_id": "cloud_infra", "faction_color": "#06b6d4", "layer": "L2 クラウド・データセンター・分散基盤", "layer_id": "l2", "wav_file": "052_マシュー_プリンス.wav"}, {"id": 53, "name": "パルマー・ラッキー", "en_name": "Palmer Luckey", "category_id": 3, "category_name": "インフラ・ハードウェア・クラウドの重鎮", "affiliation": "Anduril Industries 創業者 / Oculus VR 創業者", "profile": "10代でVRヘッドセット開発のOculus VRを創業しFacebookに売却。2017年に防衛テックスタートアップAnduril Industriesを創業。", "achievement": "ハードウェアと自律型AIソフトウェア「Lattice」を統合し、自律ドローン、防空システム、自律型潜水艇など防衛・安全保障AIのパラダイムを刷新。", "recent": "米国防総省の次世代自律型無人戦闘機（CCA）開発パートナーに選定されるなど、AIによる防衛イノベーションの旗手として巨額の評価額を誇る。", "faction": "防衛・安全保障AI", "faction_id": "defense", "faction_color": "#475569", "layer": "L1 半導体・ハードウェア・メモリ", "layer_id": "l1", "wav_file": "053_パルマー_ラッキー.wav"}, {"id": 54, "name": "ジェフ・ベゾス", "en_name": "Jeff Bezos", "category_id": 3, "category_name": "インフラ・ハードウェア・クラウドの重鎮", "affiliation": "Amazon 創業者・取締役会長 / Prometheus 共同CEO", "profile": "Amazonを創業し電子商取引とクラウド（AWS）の帝国を築いた現代最高の起業家。宇宙企業Blue Originも率いる。", "achievement": "Amazonの初期から推薦アルゴリズムやフルフィルメントロボットなど機械学習への積極投資を断行。", "recent": "自身の個人オフィスや投資ファンドを通じてPerplexity AI、Physical Intelligence、AI創薬など最先端AIベンチャーに巨額投資。AIを活用した物理科学・製造変革を後押し。", "faction": "学術パイオニア・基盤研究", "faction_id": "pioneers", "faction_color": "#6366f1", "layer": "L1 半導体・ハードウェア・メモリ", "layer_id": "l1", "wav_file": "054_ジェフ_ベゾス.wav"}, {"id": 55, "name": "何庭波", "en_name": "フー・ティンボー / Teresa He", "category_id": 3, "category_name": "インフラ・ハードウェア・クラウドの重鎮", "affiliation": "Huawei ディレクター / HiSilicon（海思半導体）プレジデント", "profile": "北京郵電大学修士。1995年にHuaweiに入社し、半導体設計子会社HiSiliconを率いて同社を世界トップクラスのファブレス企業に育て上げた伝説的女性エンジニア。", "achievement": "米国の厳しい制裁下で自社AIプロセッサ「Ascend（昇騰）910」シリーズおよび通信用チップの開発・自立化を指揮。", "recent": "中国国内のAIデータセンターやLLM学習・推論を支える国産半導体サプライチェーンの中核として、NVIDIA代替となるAscendクラスタの普及を主導。", "faction": "半導体・ハードウェア絶対君主", "faction_id": "hardware", "faction_color": "#8b5cf6", "layer": "L1 半導体・ハードウェア・メモリ", "layer_id": "l1", "wav_file": "055_何庭波.wav"}, {"id": 56, "name": "ブランドン・ツェン", "en_name": "Brandon Tseng", "category_id": 3, "category_name": "インフラ・ハードウェア・クラウドの重鎮", "affiliation": "Shield AI 共同創業者兼プレジデント", "profile": "元米海軍特殊部隊（Navy SEALs）。ハーバード・ビジネス・スクール卒業後、実戦経験に基づき戦場での隊員の命を守るため2015年にShield AIを共同創業。", "achievement": "GPSや通信が遮断された過酷な電波妨害環境下でも航空機・無人機を自律飛行・協調行動させるAIパイロットシステム「Hivemind」を開発。", "recent": "F-16戦闘機の自律ドッグファイト飛行試験に成功し、世界各国の軍隊や航空宇宙大手に自律操縦AIスタックを提供。防衛自律AIのリーダー。", "faction": "防衛・安全保障AI", "faction_id": "defense", "faction_color": "#475569", "layer": "L1 半導体・ハードウェア・メモリ", "layer_id": "l1", "wav_file": "056_ブランドン_ツェン.wav"}, {"id": 57, "name": "マティ・スタニシェフスキ", "en_name": "Mati Staniszewski", "category_id": 4, "category_name": "AIスタートアップ・ユニコーン・イノベーター", "affiliation": "ElevenLabs 共同創業者兼CEO", "profile": "ポーランド出身。インペリアル・カレッジ・ロンドン卒、Palantirの元オペレーションストラテジスト。幼馴染の元Googleエンジニアと共に2022年にElevenLabsを創業。", "achievement": "最も感情表現豊かで自然な多言語AI音声合成・ボイスクローニング技術を確立。映画吹き替え、オーディオブック、ゲーム音声を革新。", "recent": "音声エージェントプラットフォーム「Conversational AI」を展開し、カスタマーサポートやインタラクティブエンタメ分野でのリアルタイム音声対話を牽引。", "faction": "急成長AIスタートアップ・特化エージェント", "faction_id": "startup", "faction_color": "#14b8a6", "layer": "L5 アプリケーション・自律エージェント", "layer_id": "l5", "wav_file": "057_マティ_スタニシェフスキ.wav"}, {"id": 58, "name": "エドウィン・チェン", "en_name": "Edwin Chen", "category_id": 4, "category_name": "AIスタートアップ・ユニコーン・イノベーター", "affiliation": "Surge AI 創業者兼CEO", "profile": "MIT出身。Google、Facebook、Twitterでデータサイエンティストおよび自然言語処理エンジニアを務めた後、2020年にSurge AIを創業。", "achievement": "RLHF（人間のフィードバックによる強化学習）やモデル評価に不可欠な高品質な人間アノテーションプラットフォームを構築。", "recent": "OpenAI、Anthropic、Googleなどに極めて緻密な専門家データ・レッドチーミング（脆弱性検証）データを提供し、モデルの推論・安全性向上を支える影の立役者。", "faction": "急成長AIスタートアップ・特化エージェント", "faction_id": "startup", "faction_color": "#14b8a6", "layer": "L4 学習データ・評価・著作権認証", "layer_id": "l4", "wav_file": "058_エドウィン_チェン.wav"}, {"id": 59, "name": "ジュリアン・ショーモン", "en_name": "Julien Chaumond", "category_id": 4, "category_name": "AIスタートアップ・ユニコーン・イノベーター", "affiliation": "Hugging Face 共同創業者兼CTO", "profile": "フランス出身、エコール・ポリテクニークおよびスタンフォード大学で学ぶ。クレマン・デラングらと共にHugging Faceを共同創業。", "achievement": "オープンソース機械学習ライブラリ「Transformers」の初期開発とアーキテクチャ設計を指揮。世界中の開発者が数行のコードで先端モデルを動かせる仕組みを完成。", "recent": "プラットフォーム全体のインフラ・推論ソリューションの拡充と、オープンサイエンス・オープンウェイトモデルのグローバル普及を技術面から統括。", "faction": "Meta × オープンソース AI 陣営", "faction_id": "meta_open", "faction_color": "#3b82f6", "layer": "学術・基礎理論・パイオニア", "layer_id": "academic", "wav_file": "059_ジュリアン_ショーモン.wav"}, {"id": 60, "name": "トーマス・ウルフ", "en_name": "Thomas Wolf", "category_id": 4, "category_name": "AIスタートアップ・ユニコーン・イノベーター", "affiliation": "Hugging Face 共同創業者兼CSO（チーフサイエンスオフィサー）", "profile": "フランスの物理学者・特許弁理士からAI研究者へと転身。物理学と機械学習の双方で博士号レベルの専門性を持つ。", "achievement": "「Transformers」ライブラリの生みの親の1人であり、オープンモデルの大規模共同学習プロジェクト「BigScience（BLOOMモデル）」を主導。", "recent": "オープンサイエンスとしてのAI研究を牽引。書籍執筆や国際ワークショップを通じて、オープンソースコミュニティの科学的透明性を推進。", "faction": "Meta × オープンソース AI 陣営", "faction_id": "meta_open", "faction_color": "#3b82f6", "layer": "学術・基礎理論・パイオニア", "layer_id": "academic", "wav_file": "060_トーマス_ウルフ.wav"}, {"id": 61, "name": "シャオ・ホン", "en_name": "Shao Hong / 肖涵", "category_id": 4, "category_name": "AIスタートアップ・ユニコーン・イノベーター", "affiliation": "Manus 創業者兼CEO / Jina AI 創業者", "profile": "ドイツ・ミュンヘン工科大学で博士号取得。Tencent、Zalandoを経てオープンソース検索AI企業Jina AIを創業。", "achievement": "マルチモーダル埋め込みモデル（Jina Embeddings）や検索基盤を構築後、完全自律型汎用AIエージェント「Manus」を発表。", "recent": "ユーザーの指示に応じてブラウザ操作、コード実行、ドキュメント作成を完結させる汎用自律エージェントの商用展開を加速し、エージェントAIの最前線を走る。", "faction": "急成長AIスタートアップ・特化エージェント", "faction_id": "startup", "faction_color": "#14b8a6", "layer": "L5 アプリケーション・自律エージェント", "layer_id": "l5", "wav_file": "061_シャオ_ホン.wav"}, {"id": 62, "name": "ウィンストン・ワインバーグ", "en_name": "Winston Weinberg", "category_id": 4, "category_name": "AIスタートアップ・ユニコーン・イノベーター", "affiliation": "Harvey 共同創業者兼CEO", "profile": "名門法律事務所オメルベニー＆マイヤーズの元証券訴訟弁護士。DeepMind出身のエンジニアと共に2022年にHarveyを創業。", "achievement": "法律業務特化型生成AIプラットフォームを開発。PwCなどの世界的大手法律事務所・監査法人との独占的提携を獲得。", "recent": "契約書レビュー、デューデリジェンス、法的リサーチを高度に自動化し、OpenAI Startup FundやSequoiaからの巨額出資を受けて法務リーガルテックの頂点に君臨。", "faction": "急成長AIスタートアップ・特化エージェント", "faction_id": "startup", "faction_color": "#14b8a6", "layer": "L5 アプリケーション・自律エージェント", "layer_id": "l5", "wav_file": "062_ウィンストン_ワインバーグ.wav"}, {"id": 63, "name": "スチ・サリア", "en_name": "Suchi Saria", "category_id": 4, "category_name": "AIスタートアップ・ユニコーン・イノベーター", "affiliation": "Bayesian Health 創業者兼CEO / ジョンズ・ホプキンス大学准教授", "profile": "スタンフォード大でダフネ・コラーに師事し博士号取得。AI×医療統計のトップサイエンティスト。", "achievement": "臨床現場で敗血症などの致命的疾患の兆候を早期予測し、医療従事者に警告を発する臨床意思決定支援AIプラットフォームを実用化。", "recent": "医療従事者の高い採用率と診断精度を証明した査読論文を多数発表し、命に関わる臨床現場で「信頼されるAI」の実装モデルとして高い評価を得る。", "faction": "急成長AIスタートアップ・特化エージェント", "faction_id": "startup", "faction_color": "#14b8a6", "layer": "L5 アプリケーション・自律エージェント", "layer_id": "l5", "wav_file": "063_スチ_サリア.wav"}, {"id": 64, "name": "ビベック・ラガヴァン", "en_name": "Vivek Raghavan", "category_id": 4, "category_name": "AIスタートアップ・ユニコーン・イノベーター", "affiliation": "Sarvam AI 共同創業者", "profile": "カーネギーメロン大学で博士号取得。インドの国民的デジタルID基盤「Aadhaar（アドハー）」の生体認証プラットフォーム構築に貢献した名エンジニア。", "achievement": "多様な言語・方言が存在するインド市場に特化したソブリンAIモデルおよび音声基盤「Sarvam 1」等を開発。", "recent": "LightspeedやKhosla Venturesから出資を受け、インド政府や大手企業と連携してインドのデジタル公共インフラに統合される言語AIをリード。", "faction": "急成長AIスタートアップ・特化エージェント", "faction_id": "startup", "faction_color": "#14b8a6", "layer": "L5 アプリケーション・自律エージェント", "layer_id": "l5", "wav_file": "064_ビベック_ラガヴァン.wav"}, {"id": 65, "name": "アリー・K・ミラー", "en_name": "Allie K. Miller", "category_id": 4, "category_name": "AIスタートアップ・ユニコーン・イノベーター", "affiliation": "Open Machine CEO / AIアドバイザー・投資家", "profile": "ダートマス大・ウォートン校MBA出身。IBM WatsonでAI事業開発を担当後、AWSの機械学習ビジネス開発グローバル責任者を歴任。", "achievement": "LinkedInで140万人超のフォロワーを持つ世界最大級のAIインフルエンサー・ビジネスアドバイザー。大企業のAI導入戦略を多数指南。", "recent": "自身のコンサルティング・投資会社Open Machineを率い、Fortune 500企業への生成AI導入、スタートアップ投資、一般ビジネス層向けAI教育を精力的に展開。", "faction": "急成長AIスタートアップ・特化エージェント", "faction_id": "startup", "faction_color": "#14b8a6", "layer": "L5 アプリケーション・自律エージェント", "layer_id": "l5", "wav_file": "065_アリー_K_ミラー.wav"}, {"id": 66, "name": "ホン・ウェン・チョン", "en_name": "Hon Weng Chong", "category_id": 4, "category_name": "AIスタートアップ・ユニコーン・イノベーター", "affiliation": "Cortical Labs 創業者兼CEO", "profile": "オーストラリア出身の医師兼ソフトウェアエンジニア。合成生物学と情報科学を融合させ、2019年にCortical Labsを設立。", "achievement": "人間の生体脳細胞（ニューロン）をシリコンチップ上で培養し、ビデオゲーム『ポン（Pong）』をプレイさせる「DishBrain」システムを開発。", "recent": "「生物学的コンピューティング（Biological Computing / Organoid Intelligence）」の実用化を目指し、超低消費電力で学習する次世代バイオハイブリッドAIチップの研究を主導。", "faction": "急成長AIスタートアップ・特化エージェント", "faction_id": "startup", "faction_color": "#14b8a6", "layer": "L5 アプリケーション・自律エージェント", "layer_id": "l5", "wav_file": "066_ホン_ウェン_チョン.wav"}, {"id": 67, "name": "バレリー・ボロヴィク", "en_name": "Valerii Borovyk", "category_id": 4, "category_name": "AIスタートアップ・ユニコーン・イノベーター", "affiliation": "First Contact 創業者兼CEO", "profile": "ウクライナの防衛エンジニア・起業家。自律型無人航空機（UAV）および電子戦対策システムの開発を手がける。", "achievement": "ロシアによる電波妨害（ジャミング）を回避し、ターゲットを自動追尾・攻撃する終末誘導AI搭載ドローンを開発・実戦投入。", "recent": "ウクライナ戦争の現場において低コストな自律AIドローンの実戦配備を進め、現代の電子戦におけるAIソフトウェア主導の防衛パラダイムシフトを体現。", "faction": "防衛・安全保障AI", "faction_id": "defense", "faction_color": "#475569", "layer": "L5 アプリケーション・自律エージェント", "layer_id": "l5", "wav_file": "067_バレリー_ボロヴィク.wav"}, {"id": 68, "name": "エド・ニュートン＝レックス", "en_name": "Ed Newton-Rex", "category_id": 4, "category_name": "AIスタートアップ・ユニコーン・イノベーター", "affiliation": "Fairly Trained 創業者兼CEO / 元Stability AIオーディオ担当VP", "profile": "ケンブリッジ大卒の作曲家・起業家。AI作曲スタートアップJukedeckを創業しTikTokへ売却。その後Stability AIの音声AI責任者を務める。", "achievement": "AIモデルの無断スクレイピングによる学習に抗議してStability AIを辞職。クリエイターの許諾を得て学習したAIモデルのみを認証する非営利団体「Fairly Trained」を設立。", "recent": "著作権侵害を行わない倫理的な生成AIの認証制度を確立し、音楽・アート・文学界の権利保護とAI産業の健全な共存に向けた国際的オピニオンリーダー。", "faction": "急成長AIスタートアップ・特化エージェント", "faction_id": "startup", "faction_color": "#14b8a6", "layer": "L4 学習データ・評価・著作権認証", "layer_id": "l4", "wav_file": "068_エド_ニュートン＝レックス.wav"}, {"id": 69, "name": "カクル・スリバスタヴァ", "en_name": "Kakul Srivastava", "category_id": 4, "category_name": "AIスタートアップ・ユニコーン・イノベーター", "affiliation": "Splice CEO", "profile": "MIT・UCバークレー出身。Flickr、GitHub、Adobeで製品開発を率いた後、音楽クリエイター向けサンプル音源プラットフォームSpliceのCEOに就任。", "achievement": "音楽制作におけるAIツールの民主化を推進。人間のクリエイティビティを奪うのではなく補生・増幅する共創型AI検索・生成機能を提供。", "recent": "クリエイターコミュニティへの収益還元と知的財産権を尊重した倫理的な音楽AIモデルの商用化を推進し、クリエイティブテック界を牽引。", "faction": "急成長AIスタートアップ・特化エージェント", "faction_id": "startup", "faction_color": "#14b8a6", "layer": "L5 アプリケーション・自律エージェント", "layer_id": "l5", "wav_file": "069_カクル_スリバスタヴァ.wav"}, {"id": 70, "name": "リード・ホフマン", "en_name": "Reid Hoffman", "category_id": 5, "category_name": "投資家・エコシステムビルダー", "affiliation": "Greylock Partners パートナー / Microsoft 取締役", "profile": "PayPalの初期幹部（PayPalマフィア）であり、LinkedInの共同創業者。OpenAIの初期共同設立者兼取締役も務めたシリコンバレーの重鎮。", "achievement": "OpenAI、Inflection AI等の創業初期に多大な資本と戦略的支援を提供。ポッドキャストや著作『Impromptu』等を通じてAIと人類の共生を啓発。", "recent": "Greylockを通じてエンタープライズAIスタートアップへ積極投資を継続。Microsoft取締役として同社のAI覇権戦略を裏から支える。", "faction": "巨大VC・投資家・資本家", "faction_id": "investors", "faction_color": "#ec4899", "layer": "L0 巨大資本・投資家・ファンド", "layer_id": "l0", "wav_file": "070_リード_ホフマン.wav"}, {"id": 71, "name": "マーク・アンドリーセン", "en_name": "Marc Andreessen", "category_id": 5, "category_name": "投資家・エコシステムビルダー", "affiliation": "Andreessen Horowitz（a16z）共同創業者兼ゼネラルパートナー", "profile": "伝説のウェブブラウザ「Mosaic」「Netscape」を開発。「ソフトウェアが世界を飲み込む」の予言で知られるVC界のカリスマ。", "achievement": "「テクノ・オプティミスト宣言（The Techno-Optimist Manifesto）」を発表し、無制限の技術進歩とオープンソースAIの発展を強烈に擁護。", "recent": "Llamaを活用したオープンソースAIや防衛テック（Anduril等）へ数十億ドル規模の資金を配分し、過度なAI規制論に最も激しく抵抗するリーダー。", "faction": "巨大VC・投資家・資本家", "faction_id": "investors", "faction_color": "#ec4899", "layer": "L0 巨大資本・投資家・ファンド", "layer_id": "l0", "wav_file": "071_マーク_アンドリーセン.wav"}, {"id": 72, "name": "ビノッド・コスラ", "en_name": "Vinod Khosla", "category_id": 5, "category_name": "投資家・エコシステムビルダー", "affiliation": "Khosla Ventures 創業者", "profile": "サン・マイクロシステムズ（Sun Microsystems）の共同創業者。シリコンバレーで最もリスクを厭わないディープテック投資家。", "achievement": "2019年、OpenAIの最初の機関投資家として5000万ドルを投資。「今後25年で人類の仕事の80%がAIに代替される」と予測。", "recent": "ヘルスケア、教育、ロボティクス、核融合などAIと物理科学が交差するフロンティア領域へ積極投資を展開し、米中AI冷戦における米国の優位確保を主張。", "faction": "巨大VC・投資家・資本家", "faction_id": "investors", "faction_color": "#ec4899", "layer": "L0 巨大資本・投資家・ファンド", "layer_id": "l0", "wav_file": "072_ビノッド_コスラ.wav"}, {"id": 73, "name": "パット・グレイディ", "en_name": "Pat Grady", "category_id": 5, "category_name": "投資家・エコシステムビルダー", "affiliation": "Sequoia Capital パートナー", "profile": "名門ベンチャーキャピタルSequoiaのグロース投資チームを率いる。Snowflake、HubSpot、Zoomなどへの初期投資で知られる。", "achievement": "「Generative AI: A Creative New World」などの洞察力あるレポートを共同執筆し、生成AIのアプリケーション層への巨額投資ブームを主導。", "recent": "OpenAI、Harvey、Gleanなどへの大型投資を主導。「AIデータセンターのインフラ投資額と実際のソフトウェア収益のギャップ（6000億ドル問題）」を鋭く指摘し議論を喚起。", "faction": "巨大VC・投資家・資本家", "faction_id": "investors", "faction_color": "#ec4899", "layer": "L0 巨大資本・投資家・ファンド", "layer_id": "l0", "wav_file": "073_パット_グレイディ.wav"}, {"id": 74, "name": "アルフレッド・リン", "en_name": "Alfred Lin", "category_id": 5, "category_name": "投資家・エコシステムビルダー", "affiliation": "Sequoia Capital パートナー", "profile": "Zapposの元会長・CFO・COO。Sequoia屈指の投資実績（Airbnb、DoorDash等）を誇る。", "achievement": "AirbnbやDoorDashなどのマーケットプレイス事業のスケール経験を活かし、次世代AIコンシューマー＆エンタープライズサービスの選別を統括。", "recent": "基盤モデルそのものへの投資にとどまらず、AIワークフローを業務現場に組み込んで根本的なROIを生み出す「バーティカルAI」企業への投資を積極展開。", "faction": "巨大VC・投資家・資本家", "faction_id": "investors", "faction_color": "#ec4899", "layer": "L0 巨大資本・投資家・ファンド", "layer_id": "l0", "wav_file": "074_アルフレッド_リン.wav"}, {"id": 75, "name": "ジョシュア・クシュナー", "en_name": "Joshua Kushner", "category_id": 5, "category_name": "投資家・エコシステムビルダー", "affiliation": "Thrive Capital 創業者兼マネージングパートナー", "profile": "ハーバード大学出身。2009年にThrive Capitalを創業し、Instagram、GitHub、Stripe、Slackなどに初期から投資。", "achievement": "OpenAIの最大の資金支援者の一角。OpenAIの巨額テンダーオファー（自社株買い）や数十億ドル規模の資金調達ラウンドを主導。", "recent": "サム・アルトマンと極めて強固な信頼関係を築き、AIフロンティア企業への巨額プライベートエクイティ調達を組成する最強の金融ハブとして君臨。", "faction": "MS × OpenAI 帝国", "faction_id": "ms_openai", "faction_color": "#0284c7", "layer": "L0 巨大資本・投資家・ファンド", "layer_id": "l0", "wav_file": "075_ジョシュア_クシュナー.wav"}, {"id": 76, "name": "デビッド・サックス", "en_name": "David Sacks", "category_id": 5, "category_name": "投資家・エコシステムビルダー", "affiliation": "Craft Ventures 共同創業者 / 元PayPal COO", "profile": "PayPalの初代COO（PayPalマフィアの中核）。Yammerを創業しMicrosoftへ売却。人気ポッドキャスト「All-In Podcast」のホスト。", "achievement": "B2B SaaS投資の第一人者であり、生成AIがソフトウェアの価格破壊と生産性爆発をどのようにもたらすかのフレームワークを提唱。", "recent": "ホワイトハウスのAIおよび暗号資産政策のキーパーソン（大統領補佐官/諮問委員会等）として政財界を繋ぎ、米国のイノベーション保護と規制緩和を推進。", "faction": "巨大VC・投資家・資本家", "faction_id": "investors", "faction_color": "#ec4899", "layer": "L0 巨大資本・投資家・ファンド", "layer_id": "l0", "wav_file": "076_デビッド_サックス.wav"}, {"id": 77, "name": "ダニエル・グロス", "en_name": "Daniel Gross", "category_id": 5, "category_name": "投資家・エコシステムビルダー", "affiliation": "エンジェル投資家 / 起業家", "profile": "イスラエル出身。18歳で検索エンジンのCueを創業しAppleに売却、AppleでAI・機械学習ディレクターを務める。その後Y Combinatorパートナーを歴任。", "achievement": "ナット・フリードマンと強力な投資コンビ「NFDG」を結成。世界最高峰のプライベートGPUクラスタ「Andromeda」を自前で構築し、投資先スタートアップに計算資源を提供。", "recent": "Perplexity、Cursor（Anysphere）など、現在急成長中のAIツールの多くにシード・初期ステージから出資し、AIエコシステム屈指の目利きとして名高い。", "faction": "巨大VC・投資家・資本家", "faction_id": "investors", "faction_color": "#ec4899", "layer": "L0 巨大資本・投資家・ファンド", "layer_id": "l0", "wav_file": "077_ダニエル_グロス.wav"}, {"id": 78, "name": "ナット・フリードマン", "en_name": "Nat Friedman", "category_id": 5, "category_name": "投資家・エコシステムビルダー", "affiliation": "AI投資家 / 元GitHub CEO", "profile": "Xamarinを共同創業しMicrosoftへ売却。Microsoft傘下となったGitHubのCEOに就任し、「GitHub Copilot」を世に送り出した立役者。", "achievement": "開発者向けAIペアプログラミングを普及させた最大の功労者。ヴェスヴィオ火山噴火で炭化した巻物を解読する「Vesuvius Challenge」などのオープンAIコンペを主催。", "recent": "ダニエル・グロスと共に超有望なAIスタートアップに投資しつつ、Metaなどの大手テックのAIアドバイザーを務めるなど、エンジニア界隈で絶大な支持を集める。", "faction": "巨大VC・投資家・資本家", "faction_id": "investors", "faction_color": "#ec4899", "layer": "L0 巨大資本・投資家・ファンド", "layer_id": "l0", "wav_file": "078_ナット_フリードマン.wav"}, {"id": 79, "name": "ナビン・チャダ", "en_name": "Navin Chaddha", "category_id": 5, "category_name": "投資家・エコシステムビルダー", "affiliation": "Mayfield マネージングパートナー", "profile": "インド工科大学（IIT）デリー校、スタンフォード大学出身。シリコンバレーで長年VC投資を手がけ、数多くのIPO企業を輩出。", "achievement": "「AIによる人間拡張（AI + Human Cognition）」を投資テーゼに掲げ、初期からAI中心のシードファンドやAIインキュベーターを立ち上げた。", "recent": "企業の基幹システムを代替する「自律型AIコワーカー（AI Co-workers）」の開発企業に集中投資し、労働環境の再定義を推進。", "faction": "巨大VC・投資家・資本家", "faction_id": "investors", "faction_color": "#ec4899", "layer": "L0 巨大資本・投資家・ファンド", "layer_id": "l0", "wav_file": "079_ナビン_チャダ.wav"}, {"id": 80, "name": "スティーブン・シュワルツマン", "en_name": "Stephen Schwarzman / スティーブ・シュワルツマン", "category_id": 5, "category_name": "投資家・エコシステムビルダー", "affiliation": "Blackstone 会長兼CEO兼共同創業者", "profile": "世界最大のオルタナティブ資産運用会社ブラックストーンの創業者。世界有数の大富豪・慈善活動家。", "achievement": "MITに「Stephen A. Schwarzman College of Computing」を創設するため3億5000万ドルを寄付するなど、AI研究・教育・倫理のインフラを資金面で支援。", "recent": "世界中で急増するAIデータセンターや送電網・発電所などの物理的インフラに対し、数百億ドル規模の巨額プライベート資本を投じる最大手インフラ投資家として君臨。", "faction": "巨大VC・投資家・資本家", "faction_id": "investors", "faction_color": "#ec4899", "layer": "L0 巨大資本・投資家・ファンド", "layer_id": "l0", "wav_file": "080_スティーブン_シュワルツマン.wav"}, {"id": 81, "name": "孫正義", "en_name": "Masayoshi Son", "category_id": 5, "category_name": "投資家・エコシステムビルダー", "affiliation": "ソフトバンクグループ 代表取締役会長兼社長", "profile": "日本を代表する起業家・投資家。ソフトバンク・ビジョン・ファンドを創設し、世界のテック投資市場を席巻。", "achievement": "半導体設計大手Arm（アーム）の買収と再上場を成功させ、AIハードウェアエコシステムの根幹を押さえる。", "recent": "「10年以内に人間知能の1万倍に達するASI（人工超知能）の実現」を宣言。Armを軸とした自社AI半導体開発や巨大データセンター構想「クリスタル」、OpenAIへの大型出資など全精力をAIへ集中。", "faction": "半導体・ハードウェア絶対君主", "faction_id": "hardware", "faction_color": "#8b5cf6", "layer": "L1 半導体・ハードウェア・メモリ", "layer_id": "l1", "wav_file": "081_孫正義.wav"}, {"id": 82, "name": "ティムニット・ゲブル", "en_name": "Timnit Gebru", "category_id": 6, "category_name": "AI倫理・ガバナンス・政策・社会実装のキーパーソン", "affiliation": "分散型AI研究所（DAIR Institute）創設者兼エグゼクティブディレクター", "profile": "エリトリア出身、スタンフォード大学で博士号取得。元Google倫理的AIチーム共同リーダー。", "achievement": "大規模言語モデルの環境負荷やバイアスを指摘した記念碑的論文「Stochastic Parrots（確率的オウム）」の共著者。顔認識技術における人種・性別バイアスを告発した「Gender Shades」研究でも有名。", "recent": "大手テック企業から独立した学際的研究所DAIRを率い、周縁化されたコミュニティを守るための独立監査とテクノロジー批判を先導。", "faction": "国際政策・ガバナンス・倫理安全", "faction_id": "governance", "faction_color": "#a855f7", "layer": "L6 ガバナンス・政策・安全評価", "layer_id": "l6", "wav_file": "082_ティムニット_ゲブル.wav"}, {"id": 83, "name": "ジョイ・ブオラムウィニ", "en_name": "Joy Buolamwini", "category_id": 6, "category_name": "AI倫理・ガバナンス・政策・社会実装のキーパーソン", "affiliation": "Algorithmic Justice League（AJL）創設者 / 計算機科学者・詩人", "profile": "MITメディアラボで博士号取得。自らの顔が顔認識AIに認識されなかった体験からAIのバイアス問題に直面。", "achievement": "商業用顔認識AIの肌色・性別による認識精度の偏りを実証し、IBMやMicrosoft、Amazonの警察向け顔認識販売停止を促した。ドキュメンタリー映画『AI: 偏見の代償（Coded Bias）』の主人公。", "recent": "著書『Unmasking AI』を出版し、AI監査の義務化やアルゴリズムによる権利侵害への救済措置を法制化するための市民運動・立法アドボカシーを推進。", "faction": "国際政策・ガバナンス・倫理安全", "faction_id": "governance", "faction_color": "#a855f7", "layer": "L6 ガバナンス・政策・安全評価", "layer_id": "l6", "wav_file": "083_ジョイ_ブオラムウィニ.wav"}, {"id": 84, "name": "ライラ・イブラヒム", "en_name": "Lila Ibrahim", "category_id": 6, "category_name": "AI倫理・ガバナンス・政策・社会実装のキーパーソン", "affiliation": "Google DeepMind チーフAIレディネスオフィサー（Chief AI Readiness Officer）", "profile": "パデュー大学電気工学卒。Intelで長年幹部を務めた後、Courseraの初代社長・COOを経てDeepMindにCOOとして参画。", "achievement": "DeepMindの組織拡大、Googleとの統合、ガバナンス設計を統括。研究開発と社会的責任・実用化の橋渡し役を果たす。", "recent": "「AIレディネス」の最高責任者として、科学的発見から社会への安全な展開、リスク緩和プロトコルの策定と運用を指揮。", "faction": "Google / DeepMind 直系", "faction_id": "google", "faction_color": "#ea4335", "layer": "L6 ガバナンス・政策・安全評価", "layer_id": "l6", "wav_file": "084_ライラ_イブラヒム.wav"}, {"id": 85, "name": "ベス・バーンズ", "en_name": "Beth Barnes", "category_id": 6, "category_name": "AI倫理・ガバナンス・政策・社会実装のキーパーソン", "affiliation": "METR（Model Evaluation and Threat Research）創業者兼ディレクター", "profile": "ケンブリッジ大学出身。OpenAIで能力評価およびアライメント研究に従事した後、フロンティアAIの自律的脅威を専門に評価するMETRを設立。", "achievement": "AIモデルが「自律的な複製・自己改善・サイバー攻撃」を行う能力を持っていないかを厳格にストレステストする標準評価手法を開発。", "recent": "OpenAI、Anthropic、各国政府のAI安全研究所（US/UK AISI）と公式提携し、モデルのリリース前事前評価を担う最重要の独立評価者。", "faction": "国際政策・ガバナンス・倫理安全", "faction_id": "governance", "faction_color": "#a855f7", "layer": "L6 ガバナンス・政策・安全評価", "layer_id": "l6", "wav_file": "085_ベス_バーンズ.wav"}, {"id": 86, "name": "クララ・シャパズ", "en_name": "Clara Chappaz", "category_id": 6, "category_name": "AI倫理・ガバナンス・政策・社会実装のキーパーソン", "affiliation": "フランス AI・デジタル問題担当大臣", "profile": "ハーバード・ビジネス・スクールMBA。中古ラグジュアリーEC企業Vestiaire CollectiveのCBO、仏スタートアップ育成機関La French Techのディレクターを歴任。", "achievement": "フランスを「欧州随一のAIスタートアップ国家（AI Hub）」へと押し上げるエコシステム支援策を主導。", "recent": "EU AI法（EU AI Act）の施行に伴うイノベーション保護と規制のバランス調整、および2025年にパリで開催された「AI行動サミット（AI Action Summit）」の準備・統括を指揮。", "faction": "欧州・ソブリンAI (独立路線)", "faction_id": "europe", "faction_color": "#f59e0b", "layer": "L6 ガバナンス・政策・安全評価", "layer_id": "l6", "wav_file": "086_クララ_シャパズ.wav"}, {"id": 87, "name": "タフヌーン・ビン・ザイード・アル・ナヒヤン", "en_name": "Tahnoon bin Zayed Al Nahyan", "category_id": 6, "category_name": "AI倫理・ガバナンス・政策・社会実装のキーパーソン", "affiliation": "UAE 国家安全保障顧問 / G42 会長", "profile": "アラブ首長国連邦（UAE）の王族であり、アブダビ首長国の巨大な政府系投資ファンド（ADQ、FAB等）を統括する実力者。", "achievement": "国策AIコングロマリット「G42」を創設。Microsoftから15億ドルの出資を引き出し、米国製先端GPUの導入と中東最大のAIインフラ構築を実現。", "recent": "中国との関係を整理し米国の安全保障基準に適合させるディールをまとめ、産油国のオイルマネーをAIコンピュートとエネルギーインフラに注ぎ込む国際ハブを牽引。", "faction": "国際政策・ガバナンス・倫理安全", "faction_id": "governance", "faction_color": "#a855f7", "layer": "L6 ガバナンス・政策・安全評価", "layer_id": "l6", "wav_file": "087_タフヌーン_ビン_ザイード_アル_ナヒヤン.wav"}, {"id": 88, "name": "ドリーン・ボグダン＝マーティン", "en_name": "Doreen Bogdan-Martin", "category_id": 6, "category_name": "AI倫理・ガバナンス・政策・社会実装のキーパーソン", "affiliation": "国際電気通信連合（ITU）事務総局長", "profile": "米国出身。30年にわたり国際通信政策に携わり、ITUの157年の歴史で初の女性事務総局長に選出。", "achievement": "国連の年次グローバルイベント「AI for Good Global Summit」を主導し、国連機関全体でのAI活用と開発途上国のデジタルデバイド解消を推進。", "recent": "グローバルサウス（新興国）がAIの恩恵から取り残されないよう、国際的な技術標準策定とインフラ支援の枠組み作りをリード。", "faction": "国際政策・ガバナンス・倫理安全", "faction_id": "governance", "faction_color": "#a855f7", "layer": "L6 ガバナンス・政策・安全評価", "layer_id": "l6", "wav_file": "088_ドリーン_ボグダン＝マーティン.wav"}, {"id": 89, "name": "マリアン・クローク", "en_name": "Marian Croak", "category_id": 6, "category_name": "AI倫理・ガバナンス・政策・社会実装のキーパーソン", "affiliation": "Google 責任あるAI・人間中心技術担当バイスプレジデント", "profile": "プリンストン大で博士号取得。AT&Tベル研究所でVoIP（インターネット音声通話技術）の基本特許を含む200件以上の特許を取得した伝説的黒人女性エンジニア。全米発明家殿堂入り。", "achievement": "2014年Google入社。エンジニアリングの厳格な視点をAI倫理に導入し、GoogleのAI原則の実装・審査プロセスを統括。", "recent": "モデルの安全性評価、ハルシネーション抑制、公平性の定量的指標をプロダクトに組み込む実務的フレームワークを主導。", "faction": "Google / DeepMind 直系", "faction_id": "google", "faction_color": "#ea4335", "layer": "L6 ガバナンス・政策・安全評価", "layer_id": "l6", "wav_file": "089_マリアン_クローク.wav"}, {"id": 90, "name": "アービンド・ラマン", "en_name": "Arvind Raman", "category_id": 6, "category_name": "AI倫理・ガバナンス・政策・社会実装のキーパーソン", "affiliation": "米国AI安全研究所（US AISI）ディレクター代理 / NIST", "profile": "米国立標準技術研究所（NIST）の高官・コンピュータサイエンティスト。", "achievement": "バイデン大統領のAI大統領令に基づき設立された米国AI安全研究所の中核メンバーとして、フロンティアモデルの国家安全保障テスト基準を策定。", "recent": "大手AI研究所（OpenAI、Anthropic等）との間でモデル公開前テストの協定を結び、国際的なAI安全評価のデファクトスタンダード策定を牽引。", "faction": "国際政策・ガバナンス・倫理安全", "faction_id": "governance", "faction_color": "#a855f7", "layer": "L6 ガバナンス・政策・安全評価", "layer_id": "l6", "wav_file": "090_アービンド_ラマン.wav"}, {"id": 91, "name": "クリス・レヘイン", "en_name": "Chris Lehane", "category_id": 6, "category_name": "AI倫理・ガバナンス・政策・社会実装のキーパーソン", "affiliation": "OpenAI グローバルアフェアーズ担当バイスプレジデント", "profile": "ハーバード・ロースクール出身。クリントン政権下のホワイトハウス報道官、政治ストラテジストを経て、Airbnbのグローバルポリシー＆公共政策責任者を長年務めた百戦錬磨のロビイスト。", "achievement": "2024年にOpenAIに参画。世界各国の政府、議会、規制当局との渉外活動全体を統括。", "recent": "各国のAI規制（米カリフォルニア州SB 1047法案への対応等）や著作権法制、データセンターインフラ計画を巡り、OpenAIの立場を代弁して政策決定者に強力に働きかける。", "faction": "MS × OpenAI 帝国", "faction_id": "ms_openai", "faction_color": "#0284c7", "layer": "L6 ガバナンス・政策・安全評価", "layer_id": "l6", "wav_file": "091_クリス_レヘイン.wav"}, {"id": 92, "name": "ポーラ・インガビレ", "en_name": "Paula Ingabire", "category_id": 6, "category_name": "AI倫理・ガバナンス・政策・社会実装のキーパーソン", "affiliation": "ルワンダ共和国 ICT・イノベーション大臣", "profile": "MIT出身。世界経済フォーラムのヤング・グローバル・リーダーに選出されたアフリカを代表する若手テクノロジーリーダー。", "achievement": "ルワンダ国家AI政策（National AI Policy）を策定。医療用ドローン配送（Zipline）や電子政府のAI活用など、先端技術のテストベッドとしての国家戦略を成功させた。", "recent": "アフリカ大陸における言語的多様性に対応するソブリンAIモデルの開発と、デジタル主権の確立を国際舞台で提唱。", "faction": "国際政策・ガバナンス・倫理安全", "faction_id": "governance", "faction_color": "#a855f7", "layer": "L6 ガバナンス・政策・安全評価", "layer_id": "l6", "wav_file": "092_ポーラ_インガビレ.wav"}, {"id": 93, "name": "ボスン・ティジャニ", "en_name": "Bosun Tijani", "category_id": 6, "category_name": "AI倫理・ガバナンス・政策・社会実装のキーパーソン", "affiliation": "ナイジェリア連邦共和国 通信・イノベーション・デジタル経済大臣", "profile": "英国レスター大学で博士号取得。アフリカ最大級のテックインキュベーター「CcHUB」の共同創業者。", "achievement": "ナイジェリア国家AI戦略の策定にあたり、世界中のナイジェリア人AI研究者を結集したオープンな草の根イニシアチブを主導。", "recent": "アフリカ最大の人口を抱える同国において、多言語LLMの学習データ整備や若年層のAIスキル育成、デジタル経済圏の拡大を強力に推進。", "faction": "国際政策・ガバナンス・倫理安全", "faction_id": "governance", "faction_color": "#a855f7", "layer": "L6 ガバナンス・政策・安全評価", "layer_id": "l6", "wav_file": "093_ボスン_ティジャニ.wav"}, {"id": 94, "name": "ヘイディ・クラーフ", "en_name": "Heidy Khlaaf", "category_id": 6, "category_name": "AI倫理・ガバナンス・政策・社会実装のキーパーソン", "affiliation": "AI Now Institute チーフAIサイエンティスト / 形式手法専門家", "profile": "オックスフォード大学でコンピュータサイエンスの博士号取得。原子力発電所や航空宇宙など高信頼システムの安全検証（形式手法）のエキスパート。", "achievement": "OpenAIでGPT-4の安全性評価（レッドチーミング）に参加後、AI Now Instituteでテクノロジー寡占と安全性ガバナンスの構造的批判を展開。", "recent": "形式的検証（Formal Verification）の知見を用い、現在のブラックボックス型LLMに対する「厳密な監査基準」と「テック独占の解体」を政策当局に提言。", "faction": "国際政策・ガバナンス・倫理安全", "faction_id": "governance", "faction_color": "#a855f7", "layer": "L6 ガバナンス・政策・安全評価", "layer_id": "l6", "wav_file": "094_ヘイディ_クラーフ.wav"}, {"id": 95, "name": "プリヤ・ドンティ", "en_name": "Priya Donti", "category_id": 6, "category_name": "AI倫理・ガバナンス・政策・社会実装のキーパーソン", "affiliation": "Climate Change AI 共同創設者兼エグゼクティブディレクター / MIT 助教", "profile": "カーネギーメロン大学で博士号取得。MIT電気工学・計算機科学（EECS）助教。", "achievement": "「Tackling Climate Change with Machine Learning」の主著者の1人。機械学習を用いて気候変動対策（再生可能エネルギーの送電最適化、省エネ、気象予測等）を行う世界的コンソーシアムを創設。", "recent": "AIが消費する電力・環境負荷の削減と、地球規模の気候課題解決のためのAI応用研究を国際的なリーダーとして推進。", "faction": "国際政策・ガバナンス・倫理安全", "faction_id": "governance", "faction_color": "#a855f7", "layer": "L6 ガバナンス・政策・安全評価", "layer_id": "l6", "wav_file": "095_プリヤ_ドンティ.wav"}, {"id": 96, "name": "ダニエル・ココタイロ", "en_name": "Daniel Kokotajlo", "category_id": 6, "category_name": "AI倫理・ガバナンス・政策・社会実装のキーパーソン", "affiliation": "AI安全研究者 / ガバナンス提唱者、元OpenAIガバナンスチーム", "profile": "ノースカロライナ大学チャペルヒル校で哲学を専攻。予測市場やAIタイムラインの研究者として知られ、OpenAIのガバナンスチームで活動。", "achievement": "「2027年までにAGI（汎用人工知能）が実現する確率が70%」と予測し、安全対策が商業的利益に劣後している現状に危機感を抱いて2024年にOpenAIを辞任。巨額の退職金・権利を放棄して話題となった。", "recent": "「Right to Warn（警告する権利）」運動の中心的告発者として、米連邦取引委員会（FTC）や議会にAI企業の内部リスク隠蔽を防ぐホイッスルブロワー保護を訴える。", "faction": "国際政策・ガバナンス・倫理安全", "faction_id": "governance", "faction_color": "#a855f7", "layer": "L6 ガバナンス・政策・安全評価", "layer_id": "l6", "wav_file": "096_ダニエル_ココタイロ.wav"}, {"id": 97, "name": "マリウス・ホブハーン", "en_name": "Marius Hobbhahn", "category_id": 6, "category_name": "AI倫理・ガバナンス・政策・社会実装のキーパーソン", "affiliation": "Apollo Research 共同創業者兼CEO", "profile": "ドイツ・テュービンゲン大学で機械学習の博士号取得。AIアライメントおよび安全性評価の専門家。", "achievement": "AIモデルが人間に隠れて欺瞞的な行動（Deception）を取るか、評価基準をハック（Gaming）しようとするかを検証する評価フレームワークを確立。", "recent": "モデルがインサイダー取引や自律的脱獄（Jailbreak）を行う挙動を実証論文で公表し、英米のAI安全研究所（AISI）と協力して次世代モデルの脅威モニタリングを実施。", "faction": "国際政策・ガバナンス・倫理安全", "faction_id": "governance", "faction_color": "#a855f7", "layer": "L6 ガバナンス・政策・安全評価", "layer_id": "l6", "wav_file": "097_マリウス_ホブハーン.wav"}, {"id": 98, "name": "シュエ・ラン", "en_name": "Xue Lan / 薛瀾", "category_id": 6, "category_name": "AI倫理・ガバナンス・政策・社会実装のキーパーソン", "affiliation": "清華大学 シュワルツマン・カレッジ学長 / 中国国家AIガバナンス専門委員会主任", "profile": "カーネギーメロン大学で工学・公共政策の博士号取得。中国の科学技術イノベーション政策と公共管理の第一人者。", "achievement": "中国の国家新世代AIガバナンス原則（「調和・友好、公平・正義、包摂・共有」等）の策定を主導。国連のハイレベルAI諮問機関メンバー。", "recent": "米中間のAI安全対話の架け橋として国際フォーラムに登壇し、国際的なAI安全基準・ガバナンス協定の必要性を説く中国側の最高権威。", "faction": "中国AI独自勢力 (高効率・独自モデル)", "faction_id": "china", "faction_color": "#e11d48", "layer": "L6 ガバナンス・政策・安全評価", "layer_id": "l6", "wav_file": "098_シュエ_ラン.wav"}, {"id": 99, "name": "レイ・カーツワイル", "en_name": "Ray Kurzweil", "category_id": 6, "category_name": "AI倫理・ガバナンス・政策・社会実装のキーパーソン", "affiliation": "未来学者 / 発明家 / Google プリンシパルリサーチャー", "profile": "音声認識、光学文字認識（OCR）、シンセサイザー（Kurzweil音楽システム）を発明した伝説的エンジニア。全米発明家殿堂入り。", "achievement": "著書『ポスト・ヒューマン誕生（The Singularity Is Near）』で、技術的特異点（シンギュラリティ）が2045年に到来し、2029年にAIが人間レベルの知能を達成すると予言。", "recent": "続編『The Singularity Is Nearer（シンギュラリティはさらに近い）』（2024年）を上梓。ナノテクノロジーと脳・AIの直結による人間の知能拡張と不死化のビジョンを語り、今なお世界中に絶大な思想的影響を与える。", "faction": "Google / DeepMind 直系", "faction_id": "google", "faction_color": "#ea4335", "layer": "L6 ガバナンス・政策・安全評価", "layer_id": "l6", "wav_file": "099_レイ_カーツワイル.wav"}, {"id": 100, "name": "ハンク・グリーン", "en_name": "Hank Green", "category_id": 6, "category_name": "AI倫理・ガバナンス・政策・社会実装のキーパーソン", "affiliation": "科学コミュニケーター / 著者 / YouTuber（SciShow, Crash Course）", "profile": "兄ジョン・グリーンとともに「Vlogbrothers」を立ち上げ、教育チャンネル「SciShow」「Crash Course」を創業。数百万人の登録者を持つネット文化の重鎮。", "achievement": "科学技術の複雑な概念を一般社会に向けてわかりやすく、かつ深く解説する第一人者。クリエイターエコノミーにおける知的探究の象徴。", "recent": "生成AIが教育、創作活動、人間の知的好奇心に与えるインパクトを冷静かつ人間味あふれる視点で発信。過度なハイプ（過熱）と終末論の双方を排し、社会がAIとどう向き合うべきかの公共的対話を牽引。", "faction": "学術パイオニア・基盤研究", "faction_id": "pioneers", "faction_color": "#6366f1", "layer": "L6 ガバナンス・政策・安全評価", "layer_id": "l6", "wav_file": "100_ハンク_グリーン.wav"}];
+
+    const factionGroups = [
+      { id: 'ms_openai', name: 'MS × OpenAI 帝国', desc: 'ChatGPTとCopilotを擁する商業生成AIの最大勢力', span: 'col-4', color: '#0284c7' },
+      { id: 'anthropic', name: 'Anthropic 連合', desc: 'Amazon/Googleが出資。安全性と最高峰の推論知能', span: 'col-4', color: '#d97706' },
+      { id: 'google', name: 'Google / DeepMind 直系', desc: 'AlphaFoldからGeminiまで全スタックを掌握', span: 'col-4', color: '#ea4335' },
+      
+      { id: 'meta_open', name: 'Meta × オープン陣営', desc: 'Llamaを無償公開し、オープンAI連合を率いる', span: 'col-4', color: '#3b82f6' },
+      { id: 'xai', name: 'xAI / Tesla 独自経済圏', desc: '最大級GPUクラスタと自動運転・物理AI', span: 'col-4', color: '#10b981' },
+      { id: 'china', name: '中国AI独自勢力', desc: 'DeepSeek, ByteDance。米制裁下の超高効率推論', span: 'col-4', color: '#e11d48' },
+
+      { id: 'hardware', name: '半導体・ハードウェア絶対君主', desc: 'NVIDIA, TSMC, AMD, Broadcom。物理計算を支配', span: 'col-6', color: '#8b5cf6' },
+      { id: 'cloud_infra', name: 'クラウド・電力・インフラ基盤', desc: 'AWS, Oracle, Crusoe, Cloudflare。データセンター', span: 'col-6', color: '#06b6d4' },
+
+      { id: 'startup', name: '急成長AIスタートアップ / 特化型', desc: 'Manus, Harvey, ElevenLabs, Perplexity等', span: 'col-6', color: '#14b8a6' },
+      { id: 'investors', name: '巨大VC・投資家・資本家', desc: 'a16z, ソフトバンク孫正義, Thrive, Khosla等', span: 'col-6', color: '#ec4899' },
+
+      { id: 'governance', name: '国際政策・ガバナンス・倫理安全', desc: 'EU AI法、米英安全研究所、METR、国連', span: 'col-6', color: '#a855f7' },
+      { id: 'pioneers', name: '学術パイオニア・基盤理論研究', desc: 'ヒントン、ベンジオ、ルカン、スタンフォード等', span: 'col-6', color: '#6366f1' },
+      { id: 'defense', name: '防衛・安全保障AI', desc: 'Anduril, Shield AI, Scale AI。自律操縦と防衛スタック', span: 'col-6', color: '#64748b' }
+    ];
+
+    const layerDefs = [
+      { id: 'l6', name: 'L6 ガバナンス・政策・安全評価', desc: '国際条約、政府安全研究所、独立監査、AI倫理の枠組み' },
+      { id: 'l5', name: 'L5 アプリケーション・自律エージェント', desc: '自律実行エージェント、法務・医療特化、音声合成、教育' },
+      { id: 'l4', name: 'L4 学習データ・評価・著作権認証', desc: '高品質な専門家アノテーション、RLHFデータ、倫理認証' },
+      { id: 'l3', name: 'L3 フロンティア基盤モデル開発', desc: 'GPT-4o, Claude 3.7, Gemini, Llama, DeepSeek等の基盤知能' },
+      { id: 'l2', name: 'L2 クラウド・データセンター・分散基盤', desc: 'メガクラウド、超高速ネットワーク、クリーン電力インフラ' },
+      { id: 'l1', name: 'L1 半導体・ハードウェア・メモリ', desc: 'AI専用GPU/TPU、先端ファウンドリ、HBMメモリ' },
+      { id: 'l0', name: 'L0 巨大資本・投資家・ファンド', desc: '数百億ドル規模の資本配分、M&A、スタートアップ育成' },
+      { id: 'academic', name: '学術・基礎理論・パイオニア', desc: '数理統計、ニューラルネットワーク基礎、空間知能、世界モデル' }
+    ];
+
+    let currentSearch = '';
+    const hoverCard = document.getElementById('hoverCard');
+
+    function createChip(p) {
+      const chip = document.createElement('div');
+      chip.className = 'person-chip';
+      chip.dataset.id = p.id;
+      
+      const numStr = String(p.id).padStart(3, '0');
+      const affilShort = p.affiliation.split(' ')[0].replace('株式会社', '');
+
+      chip.innerHTML = `
+        <span class="chip-num">${numStr}</span>
+        <span class="chip-name">${p.name}</span>
+        <span class="chip-affil">${affilShort}</span>
+      `;
+
+      chip.addEventListener('mouseenter', (e) => showHover(p, e));
+      chip.addEventListener('mousemove', (e) => moveHover(e));
+      chip.addEventListener('mouseleave', hideHover);
+      chip.addEventListener('click', () => openDrawer(p));
+
+      return chip;
+    }
+
+    function renderChaosMap() {
+      const container = document.getElementById('view-chaos');
+      container.innerHTML = '';
+
+      factionGroups.forEach(fg => {
+        const members = persons.filter(p => {
+          if (p.faction_id !== fg.id) return false;
+          if (currentSearch) {
+            const q = currentSearch.toLowerCase();
+            return p.name.toLowerCase().includes(q) || 
+                   p.affiliation.toLowerCase().includes(q) ||
+                   p.achievement.toLowerCase().includes(q);
+          }
+          return true;
+        });
+
+        if (members.length === 0 && currentSearch) return;
+
+        const box = document.createElement('div');
+        box.className = `faction-box ${fg.span}`;
+
+        box.innerHTML = `
+          <div class="box-header">
+            <div class="box-title-area">
+              <div class="box-dot" style="background:${fg.color};"></div>
+              <span class="box-title">${fg.name}</span>
+            </div>
+            <span class="box-badge">${members.length}名</span>
+          </div>
+          <div class="chips-flow" id="flow-${fg.id}"></div>
+        `;
+
+        container.appendChild(box);
+        const flow = box.querySelector(`#flow-${fg.id}`);
+        members.forEach(p => flow.appendChild(createChip(p)));
+      });
+    }
+
+    function renderLayerStack() {
+      const container = document.getElementById('view-layer');
+      container.innerHTML = '';
+
+      layerDefs.forEach(ld => {
+        const members = persons.filter(p => {
+          if (p.layer_id !== ld.id) return false;
+          if (currentSearch) {
+            const q = currentSearch.toLowerCase();
+            return p.name.toLowerCase().includes(q) || 
+                   p.affiliation.toLowerCase().includes(q) ||
+                   p.achievement.toLowerCase().includes(q);
+          }
+          return true;
+        });
+
+        if (members.length === 0 && currentSearch) return;
+
+        const row = document.createElement('div');
+        row.className = 'layer-row';
+
+        row.innerHTML = `
+          <div class="layer-meta">
+            <h3>${ld.name}</h3>
+            <p>${ld.desc}</p>
+            <span class="box-badge" style="margin-top:0.4rem; display:inline-block;">${members.length}名</span>
+          </div>
+          <div class="chips-flow" id="lflow-${ld.id}"></div>
+        `;
+
+        container.appendChild(row);
+        const flow = row.querySelector(`#lflow-${ld.id}`);
+        members.forEach(p => flow.appendChild(createChip(p)));
+      });
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('tableBody');
+      tbody.innerHTML = '';
+
+      const filtered = persons.filter(p => {
+        if (currentSearch) {
+          const q = currentSearch.toLowerCase();
+          return p.name.toLowerCase().includes(q) || 
+                 p.affiliation.toLowerCase().includes(q) ||
+                 p.achievement.toLowerCase().includes(q);
+        }
+        return true;
+      });
+
+      filtered.forEach(p => {
+        const tr = document.createElement('tr');
+        tr.onclick = () => openDrawer(p);
+        tr.innerHTML = `
+          <td><span class="chip-num">${String(p.id).padStart(3, '0')}</span></td>
+          <td style="font-weight:700; color:#fff;">${p.name}</td>
+          <td style="color:var(--accent-cyan);">${p.affiliation}</td>
+          <td><span style="color:${p.faction_color};">${p.faction.split(' ')[0]}</span></td>
+          <td>${p.layer.split(' ')[0]}</td>
+          <td style="color:var(--text-muted);">${p.achievement.slice(0, 50)}...</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Hover Card Logic
+    function showHover(p, e) {
+      document.getElementById('hcNum').textContent = `No.${String(p.id).padStart(3, '0')}`;
+      document.getElementById('hcName').textContent = p.name;
+      document.getElementById('hcEn').textContent = p.en_name ? `(${p.en_name})` : '';
+      document.getElementById('hcAffil').textContent = p.affiliation;
+      
+      const fEl = document.getElementById('hcFaction');
+      fEl.textContent = p.faction.split(' ')[0];
+      fEl.style.background = p.faction_color + '25';
+      fEl.style.color = p.faction_color;
+      fEl.style.border = `1px solid ${p.faction_color}50`;
+
+      document.getElementById('hcAch').textContent = p.achievement;
+      document.getElementById('hcRecent').textContent = p.recent;
+
+      hoverCard.classList.add('visible');
+      positionHover(e);
+    }
+
+    function moveHover(e) {
+      positionHover(e);
+    }
+
+    function positionHover(e) {
+      const w = 360;
+      const h = hoverCard.offsetHeight || 280;
+      let x = e.clientX + 16;
+      let y = e.clientY + 16;
+
+      if (x + w > window.innerWidth - 16) {
+        x = e.clientX - w - 16;
+      }
+      if (y + h > window.innerHeight - 16) {
+        y = window.innerHeight - h - 16;
+      }
+      if (y < 16) y = 16;
+
+      hoverCard.style.left = `${x}px`;
+      hoverCard.style.top = `${y}px`;
+    }
+
+    function hideHover() {
+      hoverCard.classList.remove('visible');
+    }
+
+    // Side Drawer Logic
+    function openDrawer(p) {
+      hideHover();
+      document.getElementById('drNum').textContent = `No.${String(p.id).padStart(3, '0')} / ${p.category_name}`;
+      document.getElementById('drName').textContent = p.name;
+      document.getElementById('drEn').textContent = p.en_name ? `(${p.en_name})` : '';
+      document.getElementById('drAffil').textContent = p.affiliation;
+
+      const badges = document.getElementById('drBadges');
+      badges.innerHTML = `
+        <span class="chip-num" style="background:${p.faction_color}25; color:${p.faction_color}; border:1px solid ${p.faction_color}50;">${p.faction}</span>
+        <span class="chip-num" style="background:#06b6d420; color:#38bdf8; border:1px solid #06b6d450;">${p.layer}</span>
+      `;
+
+      const audio = document.getElementById('drAudio');
+      audio.src = `voice_output_zundamon/${p.wav_file}`;
+      audio.load();
+
+      document.getElementById('drProfile').textContent = p.profile;
+      document.getElementById('drAch').textContent = p.achievement;
+      document.getElementById('drRecent').textContent = p.recent;
+
+      document.getElementById('drawerOverlay').classList.add('active');
+      document.getElementById('sideDrawer').classList.add('active');
+    }
+
+    function closeDrawer() {
+      const audio = document.getElementById('drAudio');
+      audio.pause();
+      document.getElementById('drawerOverlay').classList.remove('active');
+      document.getElementById('sideDrawer').classList.remove('active');
+    }
+
+    // View Switching
+    let currentView = 'chaos';
+    function switchView(viewName, btn) {
+      currentView = viewName;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      document.getElementById('view-chaos').style.display = viewName === 'chaos' ? 'grid' : 'none';
+      document.getElementById('view-layer').style.display = viewName === 'layer' ? 'flex' : 'none';
+      document.getElementById('view-table').style.display = viewName === 'table' ? 'block' : 'none';
+
+      if (viewName === 'chaos') renderChaosMap();
+      else if (viewName === 'layer') renderLayerStack();
+      else if (viewName === 'table') renderTable();
+    }
+
+    function handleSearch() {
+      currentSearch = document.getElementById('searchBox').value.trim();
+      if (currentView === 'chaos') renderChaosMap();
+      else if (currentView === 'layer') renderLayerStack();
+      else if (currentView === 'table') renderTable();
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderChaosMap();
+    });
+  </script>
+</body>
+</html>

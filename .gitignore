@@ -1,0 +1,9 @@
+# 元の非圧縮WAVファイル（Gitに含めない）
+voice_output_zundamon/
+*.wav
+
+# 一時ファイル
+__pycache__/
+*.pyc
+scratch/
+dist/
